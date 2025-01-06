@@ -285,6 +285,8 @@ document.getElementById('retrieveButton').addEventListener('click', function() {
     .then(data => {
 
         console.log(data);
+        const jsonTabContent = document.getElementById('json-tab-content');
+        jsonTabContent.textContent = JSON.stringify(data, null, 2);
         populatePTTabs(data);
         // Update div contents
         // content1.textContent = data.content1 || 'No data for content1';

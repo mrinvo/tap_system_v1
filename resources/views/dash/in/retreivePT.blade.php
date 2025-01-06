@@ -52,6 +52,8 @@
           <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
             <a class="nav-link active" id="vert-tabs-payment-methods-tab" data-toggle="pill" href="#vert-tabs-payment-methods" role="tab" aria-controls="vert-tabs-payment-methods" aria-selected="true">Payment Methods</a>
             <a class="nav-link" id="vert-tabs-currencies-tab" data-toggle="pill" href="#vert-tabs-currencies" role="tab" aria-controls="vert-tabs-currencies" aria-selected="false">Currencies</a>
+            <a class="nav-link" id="vert-tabs-json-tab" data-toggle="pill" href="#vert-tabs-json" role="tab" aria-controls="vert-tabs-json" aria-selected="false">Full JSON</a>
+
           </div>
         </div>
         <div class="col-7 col-sm-9">
@@ -60,6 +62,10 @@
             <div class="tab-pane text-left fade show active" id="vert-tabs-payment-methods" role="tabpanel" aria-labelledby="vert-tabs-payment-methods-tab"></div>
             <!-- Currencies Tab -->
             <div class="tab-pane fade" id="vert-tabs-currencies" role="tabpanel" aria-labelledby="vert-tabs-currencies-tab"></div>
+            {{-- Full Json --}}
+            <div class="tab-pane fade" id="vert-tabs-json" role="tabpanel" aria-labelledby="vert-tabs-json-tab">
+                <pre id="json-tab-content" style="background-color: #f8f9fa; padding: 10px; border-radius: 5px; overflow-x: auto;"></pre>
+            </div>
           </div>
         </div>
       </div>
