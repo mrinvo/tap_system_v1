@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Traits\SendRequestTrait;
 use App\Http\Resources\DataWrapper;
 use App\Http\Resources\GeneralDataWrapper;
+use App\Http\Resources\InternalDataWrapper;
 use App\Models\Customer;
 // use App\Models\CustomerAgreements;
 // use App\Models\CustomerCards;
@@ -55,6 +56,22 @@ class InternalOperationsRepository
 
         // Send the payment request using the SendRequestTrait.
         return $this->sendPaymentRequest($payload, $endpoint, $method, $api_key);
+    }
+
+
+    public function whitelist($request)
+    {
+        // Create a DataWrapper instance to prepare the request data.
+        $response = new InternalDataWrapper($request);
+
+        // Convert the wrapped data to an array for processing.
+        $payload = $response->toArray();
+
+        // Generate the payment endpoint from the configuration file.
+        $endpoint = Config::get('TapEndpoints.abwhitelist');
+
+        // Send the payment request using the SendRequestTrait.
+        return $this->sendPaymentRequest($payload, $endpoint);
     }
 
 

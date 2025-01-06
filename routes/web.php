@@ -55,6 +55,18 @@ Route::controller(App\Http\Controllers\InternalOperationsController::class)->mid
             Route::get('/retrieve', 'retrievePT')->name('pt.retrieve');
             Route::post('/fetch', 'fetchPT')->name('pt.fetch');
 
+    });
+
+    Route::prefix('ab')->group(function (){
+
+
+        Route::get('/whitelist', 'whitelist')->name('ap.whitelist');
+
+        Route::post('/whitelist', 'PostWhitelist')->name('ab.whitelist.post');
+
+        Route::get('/whitelist/retrieve', 'RetrieveWhitelist')->name('ap.whitelist.retrieve');
+
+
 
 });
 

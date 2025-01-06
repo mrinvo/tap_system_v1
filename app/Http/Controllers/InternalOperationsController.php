@@ -40,4 +40,30 @@ class InternalOperationsController extends Controller
         // Check if a redirect URL is provided in the response and redirect the user if available.
         return $response;
     }
+
+    public function whitelist(){
+        return view('dash.in.ab.whitelist');
+    }
+
+    public function PostWhitelist(Request $request){
+        $response = $this->InternalOperationsRepository->whitelist($request);
+
+
+        // Check if a redirect URL is provided in the response and redirect the user if available.
+        return $response;
+
+    }
+
+    public function RetrieveWhitelist(){
+        return view('dash.in.ab.retrieveWhitelist');
+    }
+
+    public function PostRetrieveWhitelist(Request $request){
+        $response = $this->InternalOperationsRepository->whitelist($request);
+
+
+        // Check if a redirect URL is provided in the response and redirect the user if available.
+        return $response;
+
+    }
 }

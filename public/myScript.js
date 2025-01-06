@@ -335,3 +335,89 @@ document.getElementById('retrieveButton').addEventListener('click', function() {
       console.log('Enter key pressed, but prevented default action.');
     }
   });
+
+
+
+// whitelist apple pay
+
+  function applePayWhitelist() {
+    const loadingDiv = document.getElementById('abOverlayDiv');
+
+    // Get values from input fields
+    const merchantId = document.getElementById('abMid').value;
+    // Get values from input fields
+    const brandId = document.getElementById('abBrandId').value;
+            // Get values from input fields
+    const domains = document.getElementById('abDomains').value;
+    const requestType = document.getElementById('requestType').value;
+
+
+    // Show loading indicator
+    loadingDiv.style.display = 'block';
+
+    // Send asynchronous POST request
+    fetch('/in-operations/ab/whitelist', { // Update this URL with your Laravel route
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content // For CSRF token
+        },
+        body: JSON.stringify({
+            requestType: requestType,
+            merchantId: merchantId, // Replace with actual POST data
+            brandId: brandId,
+            domains: domains
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Populate Full JSON Tab
+        const jsonTabContent = document.getElementById('json-tab-content');
+        jsonTabContent.textContent = JSON.stringify(data, null, 2);
+        populateAbWhitelistTabs(data);
+    })
+    .catch(error => {
+        console.error('Error sending POST request:', error);
+
+
+        // Add error handling logic if needed
+    })
+    .finally(() => {
+        // Hide loading indicator
+        loadingDiv.style.display = 'none';
+    });
+}
+
+// Function to populate the tabs (remains unchanged)
+function populateAbWhitelistTabs(data) {
+    // Populate Details Tab
+    const detailsTab = document.getElementById('vert-tabs-details');
+    detailsTab.innerHTML = `
+        <h5>Details</h5>
+        <p><strong>ID:</strong> ${data.id}</p>
+        <p><strong>Status:</strong> ${data.status}</p>
+        <p><strong>Created:</strong> ${new Date(data.created).toLocaleString()}</p>
+        <p><strong>Live Mode:</strong> ${data.live_mode}</p>
+        <p><strong>API Version:</strong> ${data.api_version}</p>
+        <p><strong>Merchant:</strong> ${data.merchant}</p>
+        <p><strong>Brand:</strong> ${data.brand}</p>
+        <p><strong>Validate:</strong> ${data.validate}</p>
+    `;
+
+    // Populate Domain Names Tab
+    const domainsTab = document.getElementById('vert-tabs-domains');
+    let domainsHtml = '<h5>Domain Names</h5><ul>';
+    data.domainNames.forEach((domain) => {
+        domainsHtml += `<li>${domain}</li>`;
+    });
+    domainsHtml += '</ul>';
+    domainsTab.innerHTML = domainsHtml;
+
+
+}

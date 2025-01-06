@@ -97,6 +97,31 @@
                   <p>PT Details</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link ">
+                  <i class="nav-icon fas fa-copy"></i>
+                  <p>
+                    Apple Pay
+                    <i class="fas fa-angle-left right"></i>
+                    <span class="badge badge-info right"></span>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ route('ap.whitelist') }}" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Whitelist</p>
+                    </a>
+                  </li>
+                  {{-- <li class="nav-item">
+                    <a href="{{ route('ap.whitelist.retrieve') }}" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Retrieve Whitelist</p>
+                    </a>
+                  </li> --}}
+
+                </ul>
+              </li>
 
 
 
