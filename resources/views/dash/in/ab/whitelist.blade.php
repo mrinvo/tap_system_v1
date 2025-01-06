@@ -46,7 +46,7 @@
     <div class="card-header">
         <h3 class="card-title">
             <i class="fas fa-edit"></i>
-            Payment Enablement Details
+            Whitelist Details
         </h3>
     </div>
     <div id="abOverlayDiv" style="display: none;" class="overlay">
