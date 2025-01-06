@@ -55,4 +55,20 @@ class GeneralOperationsController extends Controller
         // Check if a redirect URL is provided in the response and redirect the user if available.
         return $response;
     }
+
+
+    public function retrieveMerchant(){
+        return view('dash.gn.merchant.retrieve');
+    }
+
+
+
+    public function fetchMerchant(RetrieveRequst $request){
+
+        $response = $this->GeneralOperationsRepository->FetchMerchant($request);
+
+
+        // Check if a redirect URL is provided in the response and redirect the user if available.
+        return $response;
+    }
 }

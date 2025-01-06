@@ -188,6 +188,8 @@ function retrieveBusiness() {
     })
     .then(data => {
         console.log(data);
+        const jsonTabContent = document.getElementById('json-tab-content');
+        jsonTabContent.textContent = JSON.stringify(data, null, 2);
         populateTabs(data);
     })
     .catch(error => {
@@ -421,3 +423,128 @@ function populateAbWhitelistTabs(data) {
 
 
 }
+
+
+// whitelist apple pay
+
+function retreiveMerchant() {
+    const loadingDiv = document.getElementById('merchantOverlayDiv');
+
+    // Get values from input fields
+    const merchantId = document.getElementById('merchantMid').value;
+
+
+    // Show loading indicator
+    loadingDiv.style.display = 'block';
+
+    // Send asynchronous POST request
+    fetch('/gn-operations/merchant/fetch', { // Update this URL with your Laravel route
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content // For CSRF token
+        },
+        body: JSON.stringify({
+            merchantId: merchantId, // Replace with actual POST data
+
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Populate Full JSON Tab
+        console.log(data);
+        const jsonTabContent = document.getElementById('json-tab-content');
+        jsonTabContent.textContent = JSON.stringify(data, null, 2);
+        populateMerchantTabs(data);
+    })
+    .catch(error => {
+        console.error('Error sending POST request:', error);
+
+
+        // Add error handling logic if needed
+    })
+    .finally(() => {
+        // Hide loading indicator
+        loadingDiv.style.display = 'none';
+    });
+}
+
+function populateMerchantTabs(data) {
+    // Populate General Details
+    const generalTab = document.getElementById("general-details");
+    let generalDetailsHtml = "<h5>General Details</h5>";
+    for (const [key, value] of Object.entries(data)) {
+      if (typeof value !== "object" || Array.isArray(value)) {
+        generalDetailsHtml += `<p><strong>${key}:</strong> ${
+          Array.isArray(value) ? value.join(", ") : value
+        }</p>`;
+      }
+    }
+    generalTab.innerHTML = generalDetailsHtml;
+
+    // Populate Terminals Tab
+    const terminalsTab = document.getElementById("terminals-details");
+    let terminalsHtml = "<h5>Terminals</h5>";
+    data.terminals.forEach((terminal, index) => {
+      terminalsHtml += `<h6>Terminal ${index + 1}</h6>`;
+      for (const [key, value] of Object.entries(terminal)) {
+        if (typeof value === "object" && !Array.isArray(value)) {
+          terminalsHtml += `<p><strong>${key}:</strong> ${JSON.stringify(value)}</p>`;
+        } else {
+          terminalsHtml += `<p><strong>${key}:</strong> ${
+            Array.isArray(value) ? value.join(", ") : value
+          }</p>`;
+        }
+      }
+      terminalsHtml += "<hr/>";
+    });
+    terminalsTab.innerHTML = terminalsHtml;
+
+    // Populate Risk Tab
+    const riskTab = document.getElementById("risk-details");
+    let riskHtml = "<h5>Risk Details</h5>";
+    for (const [key, value] of Object.entries(data.risk)) {
+      riskHtml += `<p><strong>${key}:</strong> ${
+        Array.isArray(value) ? JSON.stringify(value, null, 2) : value
+      }</p>`;
+    }
+    riskTab.innerHTML = riskHtml;
+
+    // Populate Operator Tab
+    const operatorTab = document.getElementById("operator-details");
+    let operatorHtml = "<h5>Operator Details</h5>";
+    for (const [key, value] of Object.entries(data.operator)) {
+      operatorHtml += `<p><strong>${key}:</strong> ${
+        typeof value === "object" && !Array.isArray(value)
+          ? JSON.stringify(value, null, 2)
+          : value
+      }</p>`;
+    }
+    operatorTab.innerHTML = operatorHtml;
+
+    // Populate Data Status Tab
+    const dataStatusTab = document.getElementById("data-status-details");
+    let dataStatusHtml = "<h5>Data Status</h5>";
+    for (const [key, value] of Object.entries(data.data_status)) {
+      dataStatusHtml += `<p><strong>${key}:</strong> ${value}</p>`;
+    }
+    dataStatusTab.innerHTML = dataStatusHtml;
+
+    // Populate Data Verification Tab
+    const dataVerificationTab = document.getElementById("data-verification-details");
+    let dataVerificationHtml = "<h5>Data Verification</h5>";
+    for (const [key, value] of Object.entries(data.data_verification)) {
+      dataVerificationHtml += `<p><strong>${key}:</strong> ${value}</p>`;
+    }
+    dataVerificationTab.innerHTML = dataVerificationHtml;
+  }
+
+  // Example usage
+
+

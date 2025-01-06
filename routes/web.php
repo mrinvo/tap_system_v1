@@ -31,6 +31,15 @@ Route::controller(App\Http\Controllers\GeneralOperationsController::class)->midd
 
 });
 
+Route::prefix('merchant')->group(function (){
+
+    Route::get('/retrieve', 'retrieveMerchant')->name('merchant.retrieve');
+    Route::post('/fetch', 'fetchMerchant')->name('merchant.fetch');
+
+
+
+});
+
 });
 
 // End of General Operations

@@ -51,6 +51,8 @@
             <a class="nav-link" id="vert-tabs-brands-tab" data-toggle="pill" href="#vert-tabs-brands" role="tab" aria-controls="vert-tabs-brands" aria-selected="false">Brands</a>
             <a class="nav-link" id="vert-tabs-user-tab" data-toggle="pill" href="#vert-tabs-user" role="tab" aria-controls="vert-tabs-user" aria-selected="false">User</a>
             <a class="nav-link" id="vert-tabs-entities-tab" data-toggle="pill" href="#vert-tabs-entities" role="tab" aria-controls="vert-tabs-entities" aria-selected="false">Entities</a>
+            <a class="nav-link" id="vert-tabs-json-tab" data-toggle="pill" href="#vert-tabs-json" role="tab" aria-controls="vert-tabs-json" aria-selected="false">Full JSON</a>
+
           </div>
         </div>
         <div class="col-7 col-sm-9">
@@ -63,6 +65,11 @@
             <div class="tab-pane fade" id="vert-tabs-user" role="tabpanel" aria-labelledby="vert-tabs-user-tab"></div>
             <!-- Entities Tab -->
             <div class="tab-pane fade" id="vert-tabs-entities" role="tabpanel" aria-labelledby="vert-tabs-entities-tab"></div>
+
+            {{-- Full json Tab --}}
+            <div class="tab-pane fade" id="vert-tabs-json" role="tabpanel" aria-labelledby="vert-tabs-json-tab">
+                <pre id="json-tab-content" style="background-color: #f8f9fa; padding: 10px; border-radius: 5px; overflow-x: auto;"></pre>
+            </div>
           </div>
         </div>
       </div>

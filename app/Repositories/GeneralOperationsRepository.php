@@ -58,5 +58,19 @@ class GeneralOperationsRepository
 
 
 
+    public function FetchMerchant($request)
+    {
+        // Create a DataWrapper instance to prepare the request data.
+
+        // Convert the wrapped data to an array for processing.
+        $payload = [];
+
+        // Generate the payment endpoint from the configuration file.
+        $endpoint = Config::get('TapEndpoints.merchant') . '/' . $request->merchantId;
+        $method = 'GET';
+
+        // Send the payment request using the SendRequestTrait.
+        return $this->sendPaymentRequest($payload, $endpoint, $method);
+    }
 
 }

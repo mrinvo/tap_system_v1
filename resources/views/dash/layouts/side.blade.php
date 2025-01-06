@@ -62,6 +62,27 @@
             </ul>
           </li>
 
+          <li class="nav-item">
+            <a href="#" class="nav-link ">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Merchants
+                <i class="fas fa-angle-left right"></i>
+                <span class="badge badge-info right"></span>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+
+              <li class="nav-item">
+                <a href="{{ route('merchant.retrieve') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Retrieve a Merchant</p>
+                </a>
+              </li>
+
+            </ul>
+          </li>
+
           <li class="nav-header">Bulk Operations</li>
           {{-- <li class="nav-item">
             <a href="#" class="nav-link">
