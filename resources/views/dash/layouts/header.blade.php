@@ -29,7 +29,8 @@
  <!-- BS Stepper -->
 <link rel="stylesheet" href="/dash/plugins/bs-stepper/css/bs-stepper.min.css">
 <link rel="icon" href="{{ asset('fav.svg') }}" type="image/x-icon">
-
+<link rel="stylesheet" href="https://tap-sdks.b-cdn.net/apple-pay/build-1.1.6/main.css" />
+<script src="https://tap-sdks.b-cdn.net/apple-pay/build-1.1.6/main.js"></script>
 
 <link rel="stylesheet" href="/dash/plugins/summernote/summernote-bs4.min.css">
 </head>
