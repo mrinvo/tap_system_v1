@@ -7,6 +7,8 @@ Route::get('/', function () {
     return redirect('dashboard');
 });
 
+
+
 Route::get('/dashboard', function () {
     return view("dash.home.admin");
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -20,6 +22,19 @@ Route::middleware('auth')->group(function () {
 
 // Start of General Operations
 Route::controller(App\Http\Controllers\GeneralOperationsController::class)->middleware(['auth','role:SuperAdmin'])->prefix('gn-operations')->group(function () {
+
+
+    Route::prefix('checkout')->group(function (){
+
+        Route::get('/', 'checkoutView')->name('checkout.view');
+        Route::post('/create', 'storeBusiness')->name('business.create');
+        Route::get('/retrieve', 'retrieveBusiness')->name('business.retrieve');
+        Route::post('/fetch', 'fetchBusiness')->name('business.fetch');
+
+
+    });
+
+
 
     Route::prefix('business')->group(function (){
 
@@ -82,7 +97,6 @@ Route::controller(App\Http\Controllers\InternalOperationsController::class)->mid
 });
 
 // End of Internal Operations
-
 
 
 require __DIR__.'/auth.php';

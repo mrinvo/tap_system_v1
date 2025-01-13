@@ -71,4 +71,9 @@ class GeneralOperationsController extends Controller
         // Check if a redirect URL is provided in the response and redirect the user if available.
         return $response;
     }
+
+    public function checkoutView(){
+        return view('dash.gn.checkout.view');
+    }
+
 }

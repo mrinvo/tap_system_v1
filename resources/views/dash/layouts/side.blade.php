@@ -36,6 +36,29 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
         <li class="nav-header">General Operations</li>
+
+{{-- Checkout Start --}}
+        <li class="nav-item">
+            <a href="{{ route('checkout.view') }}" class="nav-link ">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Checkout
+                <i class="fas fa-angle-left right"></i>
+                <span class="badge badge-info right"></span>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('checkout.view') }}" class="nav-link active">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Checkout</p>
+                </a>
+              </li>
+
+
+            </ul>
+          </li>
+          {{-- checkout end --}}
           <li class="nav-item">
             <a href="#" class="nav-link ">
               <i class="nav-icon fas fa-copy"></i>
