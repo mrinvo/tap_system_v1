@@ -27,7 +27,7 @@
                 environment: 'development',
                 merchant: {
                     domain: 'tap-erp.invogp.com',
-                    id: '46831412'
+                    id: 'merchant_pUErA4725620r2id6810Z276'
                 },
                 acceptance: {
                     supportedBrands: ['masterCard', 'visa']
