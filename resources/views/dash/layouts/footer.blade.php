@@ -52,6 +52,8 @@
 <script src="/dash/dist/js/pages/dashboard.js"></script>
 <script src="/myScript.js"></script>
 
+@yield('script')
+
 <script>
     $(function () {
       //Initialize Select2 Elements
