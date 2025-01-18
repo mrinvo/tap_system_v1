@@ -34,6 +34,14 @@
 <link rel="stylesheet" href="https://tap-sdks.b-cdn.net/apple-pay/build-1.1.6/main.css" />
 <script src="https://tap-sdks.b-cdn.net/apple-pay/build-1.1.6/main.js"></script>
 
+{{-- benifi pay SDK --}}
+<script src="https://tap-sdks.b-cdn.net/benefit-pay/build-1.0.20/main.js"></script>
+
+{{-- card sdk v2 --}}
+<script src="https://tap-sdks.b-cdn.net/card/1.0.2/index.js"></script>
+
+
+
 
 <link rel="stylesheet" href="/dash/plugins/summernote/summernote-bs4.min.css">
 </head>

@@ -75,8 +75,8 @@
 
                                     <div class="form-group">
                                         <label for="transactionAmount">Amount</label>
-                                        <input type="number" name="transactionAmount" class="form-control" id="transactionAmount"
-                                            placeholder="Enter Amount">
+                                        <input type="number" name="transactionAmount" class="form-control"
+                                            id="transactionAmount" placeholder="Enter Amount">
                                     </div>
                                     <div class="form-group">
                                         <label for="webhook">Webhook</label>
@@ -138,6 +138,13 @@
 
                                     <div>
                                         <label>Choose Payment Method:</label>
+
+                                        <div>
+                                            <label>
+                                                <input type="radio"  name="paymentMethod" value="cards">
+                                                Cards
+                                            </label>
+                                        </div>
                                         <div>
                                             <label>
                                                 <input type="radio" name="paymentMethod" value="applePay"> Apple Pay
@@ -145,20 +152,19 @@
                                         </div>
                                         <div>
                                             <label>
-                                                <input type="radio"  name="paymentMethod" value="paypal"> Cards
+                                                <input type="radio" name="paymentMethod" value="benefitPay"> Benefit
+                                                Pay
                                             </label>
                                         </div>
-                                        <div>
-                                            <label>
-                                                <input type="radio" disabled name="paymentMethod" value="bankTransfer">
-                                                Benifit Pay
-                                            </label>
-                                        </div>
+
                                     </div>
 
                                     <hr>
 
+                                    <div style="display: none" id="card-sdk-id"></div>
                                     <div style="display: none" id="apple-pay-button"></div>
+                                    <div style="display: none" id="benefit-pay-button"></div>
+
 
                                     <hr>
                                     <br>
@@ -191,24 +197,18 @@
 @endsection
 
 @section('script')
-
-
     <script>
-
-
-
-
         // Function to display the corresponding payment method section
         document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
             radio.addEventListener('change', function() {
                 // Hide all sections
                 document.getElementById('apple-pay-button').style.display = 'none';
-                // document.getElementById('paypalSection').style.display = 'none';
+                document.getElementById('benefit-pay-button').style.display = 'none';
                 // document.getElementById('bankTransferSection').style.display = 'none';
 
                 // Show the selected section
                 if (this.value === 'applePay') {
-                            // var applePayRender = undefined
+                    // var applePayRender = undefined
 
                     const firstNameInput = document.getElementById('contactPersonFirstName');
                     const middleNameInput = document.getElementById('contactPersonMiddleName');
@@ -217,82 +217,205 @@
                     const countryCodeInput = document.getElementById('contactPersonCountryCode');
                     const phoneNumberInput = document.getElementById('contactPersonPhoneNumber');
                     // Get transaction fields
-                    const amount = document.getElementById('transactionAmount').value; // Adjust ID if needed
-                    const currency = document.getElementById('transactionCurrency').value; // Adjust ID if needed
+                    const amount = document.getElementById('transactionAmount')
+                        .value; // Adjust ID if needed
+                    const currency = document.getElementById('transactionCurrency')
+                        .value; // Adjust ID if needed
                     console.log(firstNameInput);
 
-                        const {
-                            render,
-                            abortApplePaySession
-                        } =
-                        window.TapApplepaySDK
-                        // applePayRender?.unmount()
-                                render({
-                                        debug: false,
-                                        scope: 'TapToken',
-                                        publicKey: 'pk_test_Vlk842B1EA7tDN5QbrfGjYzh',
-                                        environment: 'development',
-                                        merchant: {
-                                            domain: 'tap-erp.invogp.com',
-                                            id: 'merchant_pUErA4725620r2id6810Z276'
-                                        },
-                                        acceptance: {
-                                            supportedBrands: ['masterCard', 'visa']
-                                        },
-                                        features: {
-                                            supportsCouponCode: false
-                                        },
-                                        transaction: {
-                                            currency: 'AED', // Dynamically set from form
-                                            amount: 100      // Dynamically set from form
-                                        },
-                                        customer: {
-                                            name: [{
-                                                locale: 'en',
-                                                first: 'firstName',
-                                                middle: 'middleName',
-                                                last: 'lastName'
-                                            }],
-                                            contact: {
-                                                email: 'test@test.com',
-                                                phone: {
-                                                    number: '23423432',
-                                                    countryCode: '+20'
-                                                }
-                                            }
-                                        },
-                                        interface: {
-                                            locale: 'en',
-                                            theme: 'dark',
-                                            type: 'buy',
-                                            edges: 'curved'
-                                        },
-                                        onCancel: () => {
-                                            // it's called when the user cancels the payment
-                                            console.log('onCancel')
-                                        },
-                                        onError: (error) => {
-                                            // it's called when there is an error with the payment
-                                            console.log('onError', error)
-                                        },
-                                        onReady: () => {
-                                            // it's called when the apple pay button is ready to click
-                                            console.log('onReady')
-                                        },
-                                        onSuccess: async (data, event) => {
-                                            // it's called when the payment is successful
-                                            console.log('onSuccess', data)
-                                            // event is the same as the event in the onpaymentauthorized event https://developer.apple.com/documentation/apple_pay_on_the_web/applepaypaymentauthorizedevent
-                                            console.log('apple pay event', event)
-                                        }
-                                    },
-                                    'apple-pay-button'
-                                )
+                    const {
+                        render,
+                        abortApplePaySession
+                    } =
+                    window.TapApplepaySDK
+                    // applePayRender?.unmount()
+                    render({
+                            debug: false,
+                            scope: 'TapToken',
+                            publicKey: 'pk_test_Vlk842B1EA7tDN5QbrfGjYzh',
+                            environment: 'development',
+                            merchant: {
+                                domain: 'tap-erp.invogp.com',
+                                id: 'merchant_pUErA4725620r2id6810Z276'
+                            },
+                            acceptance: {
+                                supportedBrands: ['masterCard', 'visa']
+                            },
+                            features: {
+                                supportsCouponCode: false
+                            },
+                            transaction: {
+                                currency: 'AED', // Dynamically set from form
+                                amount: 100 // Dynamically set from form
+                            },
+                            customer: {
+                                name: [{
+                                    locale: 'en',
+                                    first: 'firstName',
+                                    middle: 'middleName',
+                                    last: 'lastName'
+                                }],
+                                contact: {
+                                    email: 'test@test.com',
+                                    phone: {
+                                        number: '23423432',
+                                        countryCode: '+20'
+                                    }
+                                }
+                            },
+                            interface: {
+                                locale: 'en',
+                                theme: 'dark',
+                                type: 'buy',
+                                edges: 'curved'
+                            },
+                            onCancel: () => {
+                                // it's called when the user cancels the payment
+                                console.log('onCancel')
+                            },
+                            onError: (error) => {
+                                // it's called when there is an error with the payment
+                                console.log('onError', error)
+                            },
+                            onReady: () => {
+                                // it's called when the apple pay button is ready to click
+                                console.log('onReady')
+                            },
+                            onSuccess: async (data, event) => {
+                                // it's called when the payment is successful
+                                console.log('onSuccess', data)
+                                // event is the same as the event in the onpaymentauthorized event https://developer.apple.com/documentation/apple_pay_on_the_web/applepaypaymentauthorizedevent
+                                console.log('apple pay event', event)
+                            }
+                        },
+                        'apple-pay-button'
+                    )
                     document.getElementById('apple-pay-button').style.display = 'block';
-                } else if (this.value === 'paypal') {
-                    document.getElementById('paypalSection').style.display = 'block';
-                } else if (this.value === 'bankTransfer') {
-                    document.getElementById('bankTransferSection').style.display = 'block';
+                } else if (this.value === 'benefitPay') {
+                    myHashString = "dsjflk;sadjf;lkasdjf;klasdjf;klasdjf;laskdjf;lskd";
+
+                    console.log("Generated Hash String: ", myHashString);
+                    const {
+                        render,
+                        Edges,
+                        Locale,
+                        ThemeMode
+                    } = window.TapBenefitpaySDK
+                    render({
+                            operator: {
+                                publicKey: 'pk_test_Vlk842B1EA7tDN5QbrfGjYzh',
+                                hashString: myHashString
+                            },
+                            debug: true,
+                            merchant: {
+                                id: 'merchant_pUErA4725620r2id6810Z276'
+                            },
+                            transaction: {
+                                amount: '12',
+                                currency: 'BHD'
+                            },
+                            reference: {
+                                transaction: 'txn_123',
+                                order: 'ord_123'
+                            },
+                            customer: {
+                                names: [{
+                                    lang: Locale.EN,
+                                    first: 'test',
+                                    last: 'tester',
+                                    middle: 'test'
+                                }],
+                                contact: {
+                                    email: 'test@gmail.com',
+                                    phone: {
+                                        countryCode: '20',
+                                        number: '1234567'
+                                    }
+                                }
+                            },
+                            interface: {
+                                locale: Locale.EN,
+                                edges: Edges.CURVED
+                            },
+                            post: {
+                                url: ''
+                            },
+                            onReady: () => {
+                                console.log('Ready')
+                            },
+                            onClick: () => {
+                                console.log('Clicked')
+                            },
+                            onCancel: () => console.log('cancelled'),
+                            onError: (err) => console.log('onError', err),
+                            onSuccess: (data) => {
+                                console.log(data)
+                            }
+                        },
+                        'benefit-pay-button'
+                    )
+
+                    document.getElementById('benefit-pay-button').style.display = 'block';
+                } else if (this.value === 'cards') {
+
+                    const {
+                        renderTapCard,
+                        Theme,
+                        Currencies,
+                        Direction,
+                        Edges,
+                        Locale
+                    } = window.CardSDK
+                    const {
+                        unmount
+                    } = renderTapCard('card-sdk-id', {
+                        publicKey: 'pk_test_Vlk842B1EA7tDN5QbrfGjYzh', // Tap's public key
+                        merchant: {
+                            id: 'merchant_pUErA4725620r2id6810Z276'
+                        },
+                        transaction: {
+                            amount: 1,
+                            currency: Currencies.SAR
+                        },
+                        customer: {
+                            id: 'customer id', //Tap's customer ID with syntax cus_xxx
+                            name: [{
+                                lang: Locale.EN,
+                                first: 'Test',
+                                last: 'Test',
+                                middle: 'Test'
+                            }],
+                            nameOnCard: 'Test',
+                            editable: true,
+                            contact: {
+                                email: 'test@gmail.com',
+                                phone: {
+                                    countryCode: '971',
+                                    number: '52999944'
+                                }
+                            }
+                        },
+                        acceptance: {
+                            supportedBrands: ['AMERICAN_EXPRESS', 'VISA', 'MASTERCARD',
+                            'MADA'], //Remove the ones that are NOT enabled on your Tap account
+                            supportedCards: "ALL" //To accept both Debit and Credit
+                        },
+                        fields: {
+                            cardHolder: true
+                        },
+                        addons: {
+                            displayPaymentBrands: true,
+                            loader: true,
+                            saveCard: true
+                        },
+                        interface: {
+                            locale: Locale.EN,
+                            theme: Theme.LIGHT,
+                            edges: Edges.CURVED,
+                            direction: Direction.LTR
+                        }
+                    })
+                    document.getElementById('card-sdk-id').style.display = 'block';
                 }
 
 
