@@ -204,7 +204,7 @@
                 // Hide all sections
                 document.getElementById('apple-pay-button').style.display = 'none';
                 document.getElementById('benefit-pay-button').style.display = 'none';
-                // document.getElementById('bankTransferSection').style.display = 'none';
+                document.getElementById('card-sdk-id').style.display = 'none';
 
                 // Show the selected section
                 if (this.value === 'applePay') {
@@ -312,7 +312,7 @@
                             },
                             transaction: {
                                 amount: '12',
-                                currency: 'BHD'
+                                currency: 'AED'
                             },
                             reference: {
                                 transaction: 'txn_123',
@@ -378,7 +378,6 @@
                             currency: Currencies.SAR
                         },
                         customer: {
-                            id: 'customer id', //Tap's customer ID with syntax cus_xxx
                             name: [{
                                 lang: Locale.EN,
                                 first: 'Test',
@@ -396,8 +395,7 @@
                             }
                         },
                         acceptance: {
-                            supportedBrands: ['AMERICAN_EXPRESS', 'VISA', 'MASTERCARD',
-                            'MADA'], //Remove the ones that are NOT enabled on your Tap account
+                            supportedBrands: ['AMERICAN_EXPRESS', 'VISA', 'MASTERCARD'], //Remove the ones that are NOT enabled on your Tap account
                             supportedCards: "ALL" //To accept both Debit and Credit
                         },
                         fields: {
