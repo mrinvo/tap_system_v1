@@ -40,7 +40,7 @@
         Payment and Currency Details
       </h3>
     </div>
-    <div id="ptOverlayDiv" style="display: none;" class="overlay">
+    <div id="ptOverlayDiv"  class="overlay hidden-div">
       <i class="fas fa-3x fa-sync-alt fa-spin"></i>
       <div class="text-bold pt-2"></div>
     </div>

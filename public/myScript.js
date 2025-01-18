@@ -166,7 +166,7 @@ function retrieveBusiness() {
     const businssIdValue = document.getElementById('businessId').value;
 
     // Show loading indicator
-    loadingDiv.style.display = 'block';
+    loadingDiv.classList.remove('hidden-div');
 
     // Send asynchronous POST request
     fetch('/gn-operations/business/fetch', { // Update this URL with your Laravel route
@@ -260,7 +260,7 @@ document.getElementById('retrieveButton').addEventListener('click', function() {
     const secretKeyValue = document.getElementById('ptSecretKey').value;
 
     // Show loading indicator
-    ptLoadingDiv.style.display = 'block';
+    ptLoadingDiv.classList.remove('hidden-div');
 
     // Send asynchronous POST request
     fetch('/in-operations/pt-details/fetch', { // Update this URL with your Laravel route
@@ -437,7 +437,7 @@ function retreiveMerchant() {
 
 
     // Show loading indicator
-    loadingDiv.style.display = 'block';
+    loadingDiv.classList.remove('hidden-div');
 
     // Send asynchronous POST request
     fetch('/gn-operations/merchant/fetch', { // Update this URL with your Laravel route

@@ -40,7 +40,7 @@
         Business Details
       </h3>
     </div>
-    <div id="overlayDiv" style="display: none;" class="overlay"><i class="fas fa-3x fa-sync-alt fa-spin"></i><div class="text-bold pt-2"></div></div>
+    <div id="overlayDiv"  class="overlay hidden-div"><i class="fas fa-3x fa-sync-alt fa-spin"></i><div class="text-bold pt-2"></div></div>
 
     <div class="card-body">
       <h4>Business Information</h4>

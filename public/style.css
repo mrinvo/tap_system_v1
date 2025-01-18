@@ -2,3 +2,7 @@
 
     background-color: black Im !important;
 }
+
+.hidden-div{
+    display: none !important;
+}

@@ -206,16 +206,18 @@
                 document.getElementById('benefit-pay-button').style.display = 'none';
                 document.getElementById('card-sdk-id').style.display = 'none';
 
+                     const firstNameInput = document.getElementById('contactPersonFirstName').value;
+                    const middleNameInput = document.getElementById('contactPersonMiddleName').value;
+                    const lastNameInput = document.getElementById('contactPersonLastName').value;
+                    const emailInput = document.getElementById('contactPersonEmail').value;
+                    const countryCodeInput = document.getElementById('contactPersonCountryCode').value;
+                    const phoneNumberInput = document.getElementById('contactPersonPhoneNumber').value;
+
                 // Show the selected section
                 if (this.value === 'applePay') {
                     // var applePayRender = undefined
 
-                    const firstNameInput = document.getElementById('contactPersonFirstName');
-                    const middleNameInput = document.getElementById('contactPersonMiddleName');
-                    const lastNameInput = document.getElementById('contactPersonLastName');
-                    const emailInput = document.getElementById('contactPersonEmail');
-                    const countryCodeInput = document.getElementById('contactPersonCountryCode');
-                    const phoneNumberInput = document.getElementById('contactPersonPhoneNumber');
+
                     // Get transaction fields
                     const amount = document.getElementById('transactionAmount')
                         .value; // Adjust ID if needed
