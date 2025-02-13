@@ -2060,8 +2060,8 @@
         function showSegmentMessage(promptElement, mainOption, subOption) {
             promptElement.innerHTML = `
                 <strong>Congratulations!</strong><br>
-                Main Selection: ${mainOption}<br>
-                Category: ${subOption}
+                Account Typen: ${mainOption}<br>
+                Segment: ${subOption}
             `;
         }
 
