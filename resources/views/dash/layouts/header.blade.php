@@ -42,6 +42,8 @@
 {{-- card sdk v2 --}}
 <script src="https://tap-sdks.b-cdn.net/card/1.0.2/index.js"></script>
 
+<script src="https://pay.google.com/gp/p/js/pay.js"></script>
+
 
 
 

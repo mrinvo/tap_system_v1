@@ -12,6 +12,14 @@ Route::get('/test', function () {
     return view('test');
 });
 
+Route::get('/test-card', function () {
+    return view('test-card');
+});
+
+Route::get('/scoping', function () {
+    return view('scoping.services');
+});
+
 Route::get('/dashboard', function () {
     return view("dash.home.admin");
 })->middleware(['auth', 'verified'])->name('dashboard');
