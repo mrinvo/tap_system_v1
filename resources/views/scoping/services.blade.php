@@ -760,6 +760,8 @@
                     <div id="bundleIdContainer" class="mt-4"></div>
                 </div>
 
+                <br>
+                <hr>
                 <div class="form-group mb-4">
                     <label class="form-label">Integration Flow</label>
                     <div class="form-check">
