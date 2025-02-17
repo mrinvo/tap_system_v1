@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -12,13 +13,19 @@ Route::get('/test', function () {
     return view('test');
 });
 
-Route::get('/test-card', function () {
+Route::get('/test-card', function (Request $request) {
+    dd($request);
     return view('test-card');
 });
 
 Route::get('/scoping', function () {
     return view('scoping.services');
 });
+
+Route::post('/scoping/submit' , function(Request $request){
+    dd($request);
+    return $request;
+})->name('scope');
 
 Route::get('/dashboard', function () {
     return view("dash.home.admin");

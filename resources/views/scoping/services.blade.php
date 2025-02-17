@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Merchant Onboarding Form</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -78,7 +80,7 @@
             background: white;
             border-radius: 12px;
             padding: 40px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             display: none;
             margin-bottom: 20px;
         }
@@ -138,7 +140,7 @@
         .option-card:not(.disabled):hover {
             border-color: var(--primary-color);
             transform: translateY(-2px);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .option-card.selected {
@@ -223,6 +225,30 @@
             animation: fadeIn 0.5s ease-in;
         }
 
+        /* Add these styles to your existing CSS */
+        .cc-email-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .cc-email-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .cc-email-group .form-control {
+            flex: 1;
+        }
+
+        .remove-cc-email {
+            padding: 0.375rem 0.75rem;
+        }
+
+        #primaryEmail {
+            color: #1f222a;
+        }
+
         .summary-table {
             width: 100%;
             margin-top: 20px;
@@ -252,8 +278,13 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         .prompt-message {
@@ -274,6 +305,7 @@
             background-color: var(--primary-color);
             border-color: var(--primary-color);
         }
+
         .summary-table td {
             padding: 10px;
             vertical-align: top;
@@ -289,6 +321,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="logo-container">
         <img src="tap-logo-dark.png" alt="Company Logo">
@@ -341,34 +374,36 @@
                 <div class="conditional-field" data-parent="new-merchant">
                     <div class="form-group mb-3">
                         <label class="form-label">Company Name</label>
-                        <input type="text" class="form-control" name="company-name" >
+                        <input type="text" class="form-control" name="company-name">
                     </div>
                     <div class="form-group mb-3">
                         <label class="form-label">Company Base Country</label>
-                        <select class="form-control" name="base-country" >
+                        <select class="form-control" name="base-country">
                             <option value="">Select country</option>
                         </select>
                     </div>
                     <div class="form-group mb-3">
                         <label class="form-label">Account Holder Name</label>
-                        <input type="text" class="form-control" name="account-holder-name" >
+                        <input type="text" class="form-control" name="account-holder-name">
                     </div>
                     <div class="form-group mb-3">
                         <label class="form-label">Account Holder Email</label>
-                        <input type="email" class="form-control" name="account-holder-email" >
+                        <input type="email" class="form-control" name="account-holder-email">
                     </div>
                     <div class="form-group mb-3">
                         <label class="form-label">Account Holder Phone</label>
-                        <input type="tel" class="form-control" name="account-holder-phone" >
+                        <input type="tel" class="form-control" name="account-holder-phone">
                     </div>
                     <div class="form-group mb-3">
                         <label class="form-label">Do you operate in other countries?</label>
                         <div class="form-check">
-                            <input type="radio" class="form-check-input" name="operate-other-countries" value="yes" >
+                            <input type="radio" class="form-check-input" name="operate-other-countries"
+                                value="yes">
                             <label class="form-check-label">Yes</label>
                         </div>
                         <div class="form-check">
-                            <input type="radio" class="form-check-input" name="operate-other-countries" value="no" >
+                            <input type="radio" class="form-check-input" name="operate-other-countries"
+                                value="no">
                             <label class="form-check-label">No</label>
                         </div>
                     </div>
@@ -379,8 +414,20 @@
                                 <select class="form-control" name="operating-countries" multiple>
                                     <!-- Countries will be populated via JavaScript -->
                                 </select>
-                                <small class="form-text text-muted mt-2">Hold Ctrl/Cmd to select multiple countries</small>
+                                <small class="form-text text-muted mt-2">Hold Ctrl/Cmd to select multiple
+                                    countries</small>
                             </div>
+                        </div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label">Are you PCI compliant?</label>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" name="pci-compliant" value="yes">
+                            <label class="form-check-label">Yes</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" name="pci-compliant" value="no">
+                            <label class="form-check-label">No</label>
                         </div>
                     </div>
                     <div class="conditional-field" data-parent="operate-other-countries">
@@ -388,17 +435,6 @@
                             <label class="form-label">Operating Countries</label>
                             <select class="form-control" name="operating-countries" multiple>
                             </select>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label class="form-label">Are you PCI compliant?</label>
-                            <div class="form-check">
-                                <input type="radio" class="form-check-input" name="pci-compliant" value="yes" >
-                                <label class="form-check-label">Yes</label>
-                            </div>
-                            <div class="form-check">
-                                <input type="radio" class="form-check-input" name="pci-compliant" value="no" >
-                                <label class="form-check-label">No</label>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -413,17 +449,20 @@
                     <div class="option-card" data-value="single-account">
                         <div class="option-icon">🏢</div>
                         <div class="option-label">Single Account</div>
-                        <p class="option-description">A single account to handle all payments under one company. Suitable for merchants with a single B2C company.</p>
+                        <p class="option-description">A single account to handle all payments under one company.
+                            Suitable for merchants with a single B2C company.</p>
                     </div>
                     <div class="option-card" data-value="multiple-accounts">
                         <div class="option-icon">🏢🏢</div>
                         <div class="option-label">Multiple Accounts for the Same Corporate</div>
-                        <p class="option-description">Multiple accounts at the same level for different operating countries, fields of service, or businesses.</p>
+                        <p class="option-description">Multiple accounts at the same level for different operating
+                            countries, fields of service, or businesses.</p>
                     </div>
                     <div class="option-card" data-value="master-account">
                         <div class="option-icon">👑</div>
                         <div class="option-label">Master Account with Multiple Accounts Under It</div>
-                        <p class="option-description">A master account for platforms/marketplaces/development houses/payment technologies.</p>
+                        <p class="option-description">A master account for platforms/marketplaces/development
+                            houses/payment technologies.</p>
                     </div>
                 </div>
 
@@ -438,11 +477,11 @@
                     <input type="hidden" name="merchantSegment" value="Normal Merchant with Multiple Accounts">
                     <div class="form-group mb-3">
                         <label class="form-label">Number of accounts with Tap Payments</label>
-                        <input type="number" class="form-control" name="number-of-accounts" min="2" >
+                        <input type="number" class="form-control" name="number-of-accounts" min="2">
                     </div>
                     <div class="form-group mb-3">
                         <label class="form-label">Dashboard preferences</label>
-                        <select class="form-control" name="dashboard-preference" >
+                        <select class="form-control" name="dashboard-preference">
                             <option value="">Select preference</option>
                             <option value="single">Single dashboard</option>
                             <option value="separate">Separate dashboards</option>
@@ -456,29 +495,37 @@
                     <div class="form-group mb-3">
                         <label class="form-label">Type of business provided to onboarded merchants</label>
                         <div class="form-check mb-2">
-                            <input type="radio" class="form-check-input" name="business-type" value="marketplace" >
-                            <label class="form-check-label">Marketplace - Customers pay you directly, and you settle amounts</label>
+                            <input type="radio" class="form-check-input" name="business-type" value="marketplace">
+                            <label class="form-check-label">Marketplace - Customers pay you directly, and you settle
+                                amounts</label>
                             <input type="hidden" data-for="marketplace" name="merchantSegment" value="Marketplace">
                         </div>
                         <div class="form-check mb-2">
-                            <input type="radio" class="form-check-input" name="business-type" value="platform" >
+                            <input type="radio" class="form-check-input" name="business-type" value="platform">
                             <label class="form-check-label">Platform - Customers pay businesses directly</label>
                             <input type="hidden" data-for="platform" name="merchantSegment" value="Platform">
                         </div>
                         <div class="form-check mb-2">
-                            <input type="radio" class="form-check-input" name="business-type" value="development-house" >
-                            <label class="form-check-label">Development House - Providing different solutions for businesses</label>
-                            <input type="hidden" data-for="development-house" name="merchantSegment" value="Development House">
+                            <input type="radio" class="form-check-input" name="business-type"
+                                value="development-house">
+                            <label class="form-check-label">Development House - Providing different solutions for
+                                businesses</label>
+                            <input type="hidden" data-for="development-house" name="merchantSegment"
+                                value="Development House">
                         </div>
                         <div class="form-check mb-2">
-                            <input type="radio" class="form-check-input" name="business-type" value="psp-managed-tap" >
+                            <input type="radio" class="form-check-input" name="business-type"
+                                value="psp-managed-tap">
                             <label class="form-check-label">Payment Technology (PSP - Managed by Tap)</label>
-                            <input type="hidden" data-for="psp-managed-tap" name="merchantSegment" value="PSP - Payment Technology">
+                            <input type="hidden" data-for="psp-managed-tap" name="merchantSegment"
+                                value="PSP - Payment Technology">
                         </div>
                         <div class="form-check mb-2">
-                            <input type="radio" class="form-check-input" name="business-type" value="psp-managed-you" >
+                            <input type="radio" class="form-check-input" name="business-type"
+                                value="psp-managed-you">
                             <label class="form-check-label">Payment Technology (PSP - Managed by You)</label>
-                            <input type="hidden" data-for="psp-managed-you" name="merchantSegment" value="PSP - Payment Facilitator">
+                            <input type="hidden" data-for="psp-managed-you" name="merchantSegment"
+                                value="PSP - Payment Facilitator">
                         </div>
                     </div>
 
@@ -486,7 +533,7 @@
                     <div class="conditional-field" data-parent="platform">
                         <div class="form-group mb-3">
                             <label class="form-label">Business Type</label>
-                            <select class="form-control" name="platform-business-type" >
+                            <select class="form-control" name="platform-business-type">
                                 <option value="">Select business type</option>
                                 <option value="Commerce">Commerce</option>
                                 <option value="Retail">Retail</option>
@@ -509,7 +556,7 @@
 
                 <div class="form-group mb-4">
                     <label class="form-label">Settlement/Payout Currency</label>
-                    <select class="form-control" name="settlement-currency" >
+                    <select class="form-control" name="settlement-currency">
                         <option value="">Select currency</option>
                         <!-- Currencies will be populated via JavaScript -->
                     </select>
@@ -517,7 +564,7 @@
 
                 <div class="form-group mb-4">
                     <label class="form-label">Pay-in Currencies</label>
-                    <select class="form-control" name="payin-currencies" multiple >
+                    <select class="form-control" name="payin-currencies" multiple>
                         <!-- Currencies will be populated via JavaScript -->
                     </select>
                     <small class="form-text text-muted">Hold Ctrl/Cmd to select multiple currencies</small>
@@ -760,16 +807,16 @@
                     <div id="bundleIdContainer" class="mt-4"></div>
                 </div>
 
-                <br>
-                <hr>
                 <div class="form-group mb-4">
                     <label class="form-label">Integration Flow</label>
                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input" name="integration-flow" value="direct-capture">
+                        <input type="checkbox" class="form-check-input" name="integration-flow"
+                            value="direct-capture">
                         <label class="form-check-label">Direct Capture</label>
                     </div>
                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input" name="integration-flow" value="authorize-capture">
+                        <input type="checkbox" class="form-check-input" name="integration-flow"
+                            value="authorize-capture">
                         <label class="form-check-label">Authorize/Hold and Capture Later</label>
                     </div>
                     <div class="form-check">
@@ -781,7 +828,8 @@
                         <label class="form-check-label">API Refund</label>
                     </div>
                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input" name="integration-flow" value="dashboard-refund">
+                        <input type="checkbox" class="form-check-input" name="integration-flow"
+                            value="dashboard-refund">
                         <label class="form-check-label">Dashboard Refund</label>
                     </div>
                 </div>
@@ -838,9 +886,27 @@
             </div>
 
             <!-- Completion Summary Section -->
+            <!-- <div class="congratulations">
+                <h3>🎉 Congratulations!</h3>
+                <p>You have completed your integration scoping.</p>
+            </div> -->
+
             <div class="congratulations">
                 <h3>🎉 Congratulations!</h3>
                 <p>You have completed your integration scoping.</p>
+                <div id="emailNotification" class="mt-4">
+                    <p>A copy of these details will be sent to your email: <strong id="primaryEmail"></strong></p>
+                    <div class="form-group mt-3">
+                        <label>Would you like to add additional email recipients? (CC)</label>
+                        <div class="cc-email-container">
+                            <div class="input-group mb-2">
+                                <input type="email" class="form-control cc-email"
+                                    placeholder="Enter email address">
+                                <button type="button" class="btn btn-secondary add-cc-email">Add Another</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <table class="table summary-table">
@@ -915,15 +981,38 @@
         }
 
         function populateCurrencies() {
-            const currencies = [
-                { code: "AED", name: "UAE Dirham" },
-                { code: "SAR", name: "Saudi Riyal" },
-                { code: "KWD", name: "Kuwaiti Dinar" },
-                { code: "BHD", name: "Bahraini Dinar" },
-                { code: "QAR", name: "Qatari Riyal" },
-                { code: "OMR", name: "Omani Rial" },
-                { code: "EGP", name: "Egyptian Pound" },
-                { code: "USD", name: "US Dollar" },
+            const currencies = [{
+                    code: "AED",
+                    name: "UAE Dirham"
+                },
+                {
+                    code: "SAR",
+                    name: "Saudi Riyal"
+                },
+                {
+                    code: "KWD",
+                    name: "Kuwaiti Dinar"
+                },
+                {
+                    code: "BHD",
+                    name: "Bahraini Dinar"
+                },
+                {
+                    code: "QAR",
+                    name: "Qatari Riyal"
+                },
+                {
+                    code: "OMR",
+                    name: "Omani Rial"
+                },
+                {
+                    code: "EGP",
+                    name: "Egyptian Pound"
+                },
+                {
+                    code: "USD",
+                    name: "US Dollar"
+                },
                 // Add more currencies as needed
             ];
 
@@ -978,7 +1067,7 @@
                 promptMessage.classList.add('show');
 
                 let segmentText = '';
-                switch(selectedValue) {
+                switch (selectedValue) {
                     case 'single-account':
                         segmentText = 'Normal Merchant';
                         break;
@@ -990,7 +1079,8 @@
                         break;
                 }
 
-                promptMessage.innerHTML = `<strong>Congratulations!</strong> Your segment has been identified as '${segmentText}'.`;
+                promptMessage.innerHTML =
+                    `<strong>Congratulations!</strong> Your segment has been identified as '${segmentText}'.`;
             }
         }
 
@@ -1071,7 +1161,8 @@
                             if (cb !== this) cb.checked = false;
                         });
                     } else if (this.checked) {
-                        const noneOption = document.querySelector('input[name="report-channels"][value="none"]');
+                        const noneOption = document.querySelector(
+                            'input[name="report-channels"][value="none"]');
                         if (noneOption) noneOption.checked = false;
                     }
                 });
@@ -1155,10 +1246,12 @@
 
                 // Validate required fields for step 1 only if a card is selected
                 const selectedValue = selectedCard.dataset.value;
-                const conditionalField = currentStepElement.querySelector(`.conditional-field[data-parent="${selectedValue}"]`);
+                const conditionalField = currentStepElement.querySelector(
+                    `.conditional-field[data-parent="${selectedValue}"]`);
 
                 if (conditionalField) {
-                    const requiredInputs = conditionalField.querySelectorAll('input[required], select[required], textarea[required]');
+                    const requiredInputs = conditionalField.querySelectorAll(
+                        'input[required], select[required], textarea[required]');
                     const isValid = Array.from(requiredInputs).every(input => {
                         if (input.type === 'checkbox' || input.type === 'radio') {
                             const name = input.name;
@@ -1184,6 +1277,7 @@
 
             return true;
         }
+
         function formatFieldName(key) {
             if (key === 'bundle-ids') return 'Bundle IDs';
             return key
@@ -1208,7 +1302,8 @@
         }
 
         function initializeIntegrationChannels() {
-            document.querySelector('select[name="app-technologies"]')?.addEventListener('change', handleAppTechnologyChange);
+            document.querySelector('select[name="app-technologies"]')?.addEventListener('change',
+            handleAppTechnologyChange);
 
             // Handle integration channel checkboxes
             document.querySelectorAll('input[name="integration-channels"]').forEach(checkbox => {
@@ -1232,27 +1327,6 @@
             });
         }
 
-        // function handleIntegrationChannelChange(checkbox) {
-        //     const channelFields = document.querySelector(`.conditional-field[data-parent="${checkbox.value}"]`);
-        //     if (channelFields) {
-        //         if (checkbox.checked) {
-        //             channelFields.classList.add('show');
-        //             // Make fields required only if they're visible
-        //             channelFields.querySelectorAll('input, select').forEach(field => {
-        //                 if (!field.hasAttribute('data-optional')) {
-        //                     field.required = true;
-        //                 }
-        //             });
-        //         } else {
-        //             channelFields.classList.remove('show');
-        //             // Remove required attribute when hidden
-        //             channelFields.querySelectorAll('input, select').forEach(field => {
-        //                 field.required = false;
-        //                 field.classList.remove('is-invalid');
-        //             });
-        //         }
-        //     }
-        // }
         function handleIntegrationChannelChange(checkbox) {
             console.log("channelFields", checkbox.value);
             const channelFields = document.querySelector(`.conditional-field[data-parent="${checkbox.value}"]`);
@@ -1397,39 +1471,6 @@
             }
         }
 
-        // function updateStep(direction) {
-        //     if (direction === 1 && !validateCurrentStep()) {
-        //         return;
-        //     }
-
-        //     const steps = document.querySelectorAll('.form-step');
-        //     const stepDots = document.querySelectorAll('.step-dot');
-        //     const prevBtn = document.getElementById('prevBtn');
-        //     const nextBtn = document.getElementById('nextBtn');
-
-        //     const newStep = currentStep + direction;
-
-        //     if (newStep >= 0 && newStep < steps.length) {
-        //         steps[currentStep].classList.remove('active');
-        //         steps[newStep].classList.add('active');
-        //         stepDots[currentStep].classList.remove('active');
-        //         stepDots[newStep].classList.add('active');
-        //         currentStep = newStep;
-
-        //         // Update navigation buttons
-        //         prevBtn.style.visibility = currentStep === 0 ? 'hidden' : 'visible';
-        //         nextBtn.textContent = currentStep === steps.length - 1 ? 'Finish' : 'Next step';
-
-        //         // Update account header visibility
-        //         updateAccountHeader();
-        //     } else if (newStep === steps.length) {
-        //         // Form completion
-        //         if (validateCurrentStep()) {
-        //             showCompletionSummary();
-        //         }
-        //     }
-        // }
-
         function updateStep(direction) {
             if (direction === 1 && !validateCurrentStep()) {
                 return;
@@ -1459,66 +1500,10 @@
             }
         }
 
-        // function showCompletionSummary() {
-        //     // Show congratulations message
-        //     document.querySelector('.congratulations').classList.add('show');
-        //     // document.querySelector('#report-dashboard').classList.add('show');
-        //     document.querySelector('#report-dashboard').style.display = 'none';
-
-        //     // Populate and show summary table
-        //     const summaryTableBody = document.getElementById('summaryTableBody');
-        //     summaryTableBody.innerHTML = '';
-
-        //     for (const [key, value] of Object.entries(formData)) {
-        //         const row = document.createElement('tr');
-        //         row.innerHTML = `
-        //             <td>${formatFieldName(key)}</td>
-        //             <td>${Array.isArray(value) ? value.join(', ') : value}</td>
-        //         `;
-        //         summaryTableBody.appendChild(row);
-        //     }
-
-        //     document.querySelector('.summary-table').classList.add('show');
-        //     document.querySelector('.export-buttons').classList.add('show');
-        //     document.querySelector('.navigation').style.display = 'none';
-        // }
-
-        function showCompletionSummary() {
-            // Show congratulations message
-            document.querySelector('.congratulations').classList.add('show');
-            document.querySelector('#report-dashboard').style.display = 'none';
-
-            // Populate and show summary table
-            const summaryTableBody = document.getElementById('summaryTableBody');
-            summaryTableBody.innerHTML = '';
-
-            for (const [key, value] of Object.entries(formData)) {
-                const row = document.createElement('tr');
-
-                if (key === 'bundle-ids') {
-                    // Special handling for bundle IDs
-                    row.innerHTML = `
-                        <td>${formatFieldName(key)}</td>
-                        <td style="white-space: pre-line">${formatBundleIds(value)}</td>
-                    `;
-                } else {
-                    row.innerHTML = `
-                        <td>${formatFieldName(key)}</td>
-                        <td>${Array.isArray(value) ? value.join(', ') : value}</td>
-                    `;
-                }
-                summaryTableBody.appendChild(row);
-            }
-
-            document.querySelector('.summary-table').classList.add('show');
-            document.querySelector('.export-buttons').classList.add('show');
-            document.querySelector('.navigation').style.display = 'none';
-        }
-
         function removeRequiredAttributes() {
             const steps = document.querySelectorAll('.form-step');
             steps.forEach((step, index) => {
-                if (index > 0) {  // Skip step 1
+                if (index > 0) { // Skip step 1
                     const inputs = step.querySelectorAll('input, select, textarea');
                     inputs.forEach(input => {
                         input.removeAttribute('required');
@@ -1545,35 +1530,107 @@
             }
         }
 
-        // function exportToCSV() {
-        //     const rows = [['Field', 'Value']];
-        //     for (const [key, value] of Object.entries(formData)) {
-        //         rows.push([formatFieldName(key), Array.isArray(value) ? value.join('; ') : value]);
-        //     }
+        function showCompletionSummary() {
+            // Show congratulations message
+            document.querySelector('.congratulations').classList.add('show');
+            document.querySelector('#report-dashboard').style.display = 'none';
 
-        //     const csvContent = rows
-        //         .map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(','))
-        //         .join('\n');
+            // Populate and show summary table
+            const summaryTableBody = document.getElementById('summaryTableBody');
+            summaryTableBody.innerHTML = '';
 
-        //     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-        //     const link = document.createElement('a');
-        //     link.href = URL.createObjectURL(blob);
-        //     link.download = 'merchant_onboarding.csv';
-        //     link.click();
-        // }
-        function exportToCSV() {
-            const rows = [['Field', 'Value']];
-
+            // Add regular form data
             for (const [key, value] of Object.entries(formData)) {
-                if (key === 'bundle-ids') {
-                    // Add each technology's bundle IDs as separate rows
-                    Object.entries(value).forEach(([tech, ids]) => {
-                        rows.push([
-                            `Bundle IDs - ${getTechnologyLabel(tech)}`,
-                            ids.join('; ')
-                        ]);
+                const row = document.createElement('tr');
+
+                // Special handling for app technologies and bundle IDs
+                if (key === 'app-technologies' && appTechBundleIds && Object.keys(appTechBundleIds).length > 0) {
+                    let bundleIdContent = '';
+                    Object.entries(appTechBundleIds).forEach(([tech, ids]) => {
+                        if (ids.length > 0 && ids[0]) { // Only show if there are valid IDs
+                            bundleIdContent += `${getTechnologyLabel(tech)}:\n`;
+                            ids.forEach(id => {
+                                if (id) bundleIdContent += `  - ${id}\n`;
+                            });
+                        }
                     });
-                } else {
+
+                    if (bundleIdContent) {
+                        row.innerHTML = `
+                            <td>App Technologies and Bundle IDs</td>
+                            <td><pre class="bundle-id-summary">${bundleIdContent}</pre></td>
+                        `;
+                    } else {
+                        row.innerHTML = `
+                            <td>App Technologies</td>
+                            <td>${Array.isArray(value) ? value.join(', ') : value}</td>
+                        `;
+                    }
+                } else if (key !== 'bundle-ids') { // Skip separate bundle-ids entry
+                    row.innerHTML = `
+                        <td>${formatFieldName(key)}</td>
+                        <td>${Array.isArray(value) ? value.join(', ') : value}</td>
+                    `;
+                }
+
+                summaryTableBody.appendChild(row);
+            }
+
+            document.querySelector('.summary-table').classList.add('show');
+            document.querySelector('.export-buttons').classList.add('show');
+            document.querySelector('.navigation').style.display = 'none';
+            document.querySelector('.congratulations').classList.add('show');
+            document.querySelector('#report-dashboard').style.display = 'none';
+
+            // Set primary email
+            const primaryEmail = formData['account-holder-email'];
+            document.getElementById('primaryEmail').textContent = primaryEmail || 'Not provided';
+
+            // Initialize CC email functionality
+            initializeCCEmails();
+        }
+
+        function initializeCCEmails() {
+            const addButton = document.querySelector('.add-cc-email');
+            if (addButton) {
+                addButton.addEventListener('click', addCCEmailField);
+            }
+        }
+
+        function addCCEmailField() {
+            const container = document.querySelector('.cc-email-container');
+            const newGroup = document.createElement('div');
+            newGroup.className = 'input-group mb-2';
+
+            newGroup.innerHTML = `
+                <input type="email" class="form-control cc-email" placeholder="Enter email address">
+                <button type="button" class="btn btn-danger remove-cc-email">Remove</button>
+            `;
+
+            container.appendChild(newGroup);
+
+            // Add remove button functionality
+            newGroup.querySelector('.remove-cc-email').addEventListener('click', function() {
+                newGroup.remove();
+            });
+        }
+
+
+        function exportToCSV() {
+            const rows = [
+                ['Field', 'Value']
+            ];
+
+            // Add regular form data
+            for (const [key, value] of Object.entries(formData)) {
+                if (key === 'app-technologies' && appTechBundleIds && Object.keys(appTechBundleIds).length > 0) {
+                    // Add app technologies with their bundle IDs
+                    Object.entries(appTechBundleIds).forEach(([tech, ids]) => {
+                        if (ids.length > 0 && ids[0]) {
+                            rows.push([`${getTechnologyLabel(tech)} Bundle IDs`, ids.join('; ')]);
+                        }
+                    });
+                } else if (key !== 'bundle-ids') {
                     rows.push([
                         formatFieldName(key),
                         Array.isArray(value) ? value.join('; ') : value
@@ -1585,46 +1642,19 @@
                 .map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(','))
                 .join('\n');
 
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const blob = new Blob([csvContent], {
+                type: 'text/csv;charset=utf-8;'
+            });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
             link.download = 'merchant_onboarding.csv';
             link.click();
         }
 
-        // function exportToPDF() {
-        //     const { jsPDF } = window.jspdf;
-        //     const doc = new jsPDF();
-
-        //     // Add title
-        //     doc.setFontSize(16);
-        //     doc.text('Merchant Onboarding Summary', 20, 20);
-
-        //     // Add content
-        //     doc.setFontSize(12);
-        //     let yPosition = 40;
-
-        //     for (const [key, value] of Object.entries(formData)) {
-        //         const text = `${formatFieldName(key)}: ${Array.isArray(value) ? value.join(', ') : value}`;
-
-        //         // Split long text into multiple lines
-        //         const textLines = doc.splitTextToSize(text, 170);
-
-        //         // Check if we need a new page
-        //         if (yPosition + (textLines.length * 7) > 280) {
-        //             doc.addPage();
-        //             yPosition = 20;
-        //         }
-
-        //         doc.text(textLines, 20, yPosition);
-        //         yPosition += (textLines.length * 7) + 3;
-        //     }
-
-        //     doc.save('merchant_onboarding.pdf');
-        // }
-
         function exportToPDF() {
-            const { jsPDF } = window.jspdf;
+            const {
+                jsPDF
+            } = window.jspdf;
             const doc = new jsPDF();
 
             // Add title
@@ -1635,29 +1665,29 @@
             doc.setFontSize(12);
             let yPosition = 40;
 
+            // Add regular form data
             for (const [key, value] of Object.entries(formData)) {
-                if (key === 'bundle-ids') {
-                    // Add bundle IDs with proper formatting
-                    doc.text('Bundle IDs:', 20, yPosition);
+                if (key === 'app-technologies' && appTechBundleIds && Object.keys(appTechBundleIds).length > 0) {
+                    // Add app technologies with their bundle IDs
+                    doc.text('App Technologies and Bundle IDs:', 20, yPosition);
                     yPosition += 10;
 
-                    Object.entries(value).forEach(([tech, ids]) => {
-                        const techText = `${getTechnologyLabel(tech)}: ${ids.join(', ')}`;
-                        const textLines = doc.splitTextToSize(techText, 170);
+                    Object.entries(appTechBundleIds).forEach(([tech, ids]) => {
+                        if (ids.length > 0 && ids[0]) {
+                            const techLabel = getTechnologyLabel(tech);
+                            doc.text(`${techLabel}:`, 25, yPosition);
+                            yPosition += 7;
 
-                        // Check if we need a new page
-                        if (yPosition + (textLines.length * 7) > 280) {
-                            doc.addPage();
-                            yPosition = 20;
+                            ids.forEach(id => {
+                                if (id) {
+                                    doc.text(`- ${id}`, 30, yPosition);
+                                    yPosition += 7;
+                                }
+                            });
                         }
-
-                        doc.text(textLines, 25, yPosition); // Indented
-                        yPosition += (textLines.length * 7) + 3;
                     });
-                } else {
+                } else if (key !== 'bundle-ids') {
                     const text = `${formatFieldName(key)}: ${Array.isArray(value) ? value.join(', ') : value}`;
-
-                    // Split long text into multiple lines
                     const textLines = doc.splitTextToSize(text, 170);
 
                     // Check if we need a new page
@@ -1672,42 +1702,6 @@
             }
 
             doc.save('merchant_onboarding.pdf');
-        }
-        function submitForm() {
-            // Here you would typically send the form data to your server
-            console.log('Submitting form data:', formData);
-            alert('Form submitted successfully!');
-
-            // Reset form
-            document.getElementById('multiStepForm').reset();
-
-            // Reset form data
-            Object.keys(formData).forEach(key => delete formData[key]);
-
-            // Reset UI
-            currentStep = 0;
-            document.querySelectorAll('.form-step').forEach((step, index) => {
-                step.classList.toggle('active', index === 0);
-            });
-            document.querySelectorAll('.step-dot').forEach((dot, index) => {
-                dot.classList.toggle('active', index === 0);
-            });
-            document.querySelectorAll('.option-card').forEach(card => {
-                card.classList.remove('selected');
-            });
-            document.querySelectorAll('.conditional-field').forEach(field => {
-                field.classList.remove('show');
-            });
-            document.querySelector('.account-header').classList.remove('show');
-            document.querySelector('.congratulations').classList.remove('show');
-            document.querySelector('.summary-table').classList.remove('show');
-            document.querySelector('.export-buttons').classList.remove('show');
-            document.querySelector('.navigation').style.display = 'block';
-            document.getElementById('prevBtn').style.visibility = 'hidden';
-            document.getElementById('nextBtn').textContent = 'Next step';
-
-            // Scroll to top
-            window.scrollTo(0, 0);
         }
 
         function handleOperatingCountriesChange(radio) {
@@ -1740,7 +1734,8 @@
             // Show congratulations message with platform and subcategory
             const promptMessage = document.getElementById('segmentPrompt');
             promptMessage.classList.add('show');
-            promptMessage.innerHTML = `<strong>Congratulations!</strong> Your segment has been identified as 'Platform - ${select.value}'.`;
+            promptMessage.innerHTML =
+                `<strong>Congratulations!</strong> Your segment has been identified as 'Platform - ${select.value}'.`;
         }
 
         function handleSpecialInputCases(input) {
@@ -1766,169 +1761,6 @@
             // Other special cases remain the same...
         }
 
-        // // Update handleOptionCardClick function
-        // function handleOptionCardClick(card) {
-        //     const parent = card.closest('.form-step');
-
-        //     // Handle card selection
-        //     parent.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
-        //     card.classList.add('selected');
-
-        //     // Store the selected value
-        //     const stepNumber = parent.dataset.step;
-        //     formData[`step${stepNumber}_selection`] = card.dataset.value;
-
-        //     // Handle conditional fields
-        //     const selectedValue = card.dataset.value;
-        //     parent.querySelectorAll('.conditional-field').forEach(field => {
-        //         if (field.dataset.parent === selectedValue) {
-        //             field.classList.add('show');
-        //             field.querySelectorAll('input, select, textarea').forEach(input => {
-        //                 input.required = true;
-        //             });
-        //         } else {
-        //             field.classList.remove('show');
-        //             field.querySelectorAll('input, select, textarea').forEach(input => {
-        //                 input.required = false;
-        //             });
-        //         }
-        //     });
-
-        //     // Handle segment prompts for step 2
-        //     if (stepNumber === '2') {
-        //         const promptMessage = document.getElementById('segmentPrompt');
-        //         promptMessage.classList.add('show');
-
-        //         let segmentText = '';
-        //         switch(selectedValue) {
-        //             case 'single-account':
-        //                 segmentText = 'Normal Merchant';
-        //                 break;
-        //             case 'multiple-accounts':
-        //                 segmentText = 'Normal Merchant with Multiple Accounts';
-        //                 break;
-        //             case 'master-account':
-        //                 segmentText = 'Master Account';
-        //                 // Don't show congratulations message yet for master account
-        //                 // It will be shown after platform subcategory selection
-        //                 return;
-        //         }
-
-        //         promptMessage.innerHTML = `<strong>Congratulations!</strong> Your segment has been identified as '${segmentText}'.`;
-        //     }
-        // }
-
-        // Update handleOptionCardClick function
-        // function handleOptionCardClick(card) {
-        //     const parent = card.closest('.form-step');
-
-        //     // Handle card selection
-        //     parent.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
-        //     card.classList.add('selected');
-
-        //     // Store the selected value
-        //     const stepNumber = parent.dataset.step;
-        //     formData[`step${stepNumber}_selection`] = card.dataset.value;
-
-        //     // Handle conditional fields
-        //     const selectedValue = card.dataset.value;
-        //     parent.querySelectorAll('.conditional-field').forEach(field => {
-        //         if (field.dataset.parent === selectedValue) {
-        //             field.classList.add('show');
-        //             field.querySelectorAll('input, select, textarea').forEach(input => {
-        //                 input.required = true;
-        //             });
-        //         } else {
-        //             field.classList.remove('show');
-        //             field.querySelectorAll('input, select, textarea').forEach(input => {
-        //                 input.required = false;
-        //             });
-        //         }
-        //     });
-
-        //     // Handle segment prompts for step 2
-        //     if (stepNumber === '2') {
-        //         const promptMessage = document.getElementById('segmentPrompt');
-        //         promptMessage.classList.add('show');
-
-        //         let mainOption = '';
-        //         let subOption = '';
-
-        //         switch(selectedValue) {
-        //             case 'single-account':
-        //                 mainOption = 'Single Account';
-        //                 subOption = 'Normal Merchant';
-        //                 showSegmentMessage(promptMessage, mainOption, subOption);
-        //                 break;
-        //             case 'multiple-accounts':
-        //                 mainOption = 'Multiple Accounts for the Same Corporate';
-        //                 subOption = 'Normal Merchant with Multiple Accounts';
-        //                 showSegmentMessage(promptMessage, mainOption, subOption);
-        //                 break;
-        //             case 'master-account':
-        //                 // Don't show message yet - wait for sub-selection
-        //                 promptMessage.classList.remove('show');
-        //                 // Add event listeners to business type radio buttons
-        //                 const businessTypeRadios = document.querySelectorAll('input[name="business-type"]');
-        //                 businessTypeRadios.forEach(radio => {
-        //                     radio.addEventListener('change', handleBusinessTypeChange);
-        //                 });
-        //                 break;
-        //         }
-        //     }
-        // }
-        // function handleBusinessTypeChange(event) {
-        //     const businessType = event.target.value;
-        //     const promptMessage = document.getElementById('segmentPrompt');
-        //     const mainOption = 'Master Account with Multiple Accounts Under It';
-        //     let subOption = '';
-
-        //     switch(businessType) {
-        //         case 'marketplace':
-        //             subOption = 'Marketplace';
-        //             break;
-        //         case 'platform':
-        //             // Don't show message yet - wait for platform business type selection
-        //             return;
-        //         case 'development-house':
-        //             subOption = 'Development House';
-        //             break;
-        //         case 'psp-managed-tap':
-        //             subOption = 'Payment Technology (PSP - Managed by Tap)';
-        //             break;
-        //         case 'psp-managed-you':
-        //             subOption = 'Payment Technology (PSP - Managed by You)';
-        //             break;
-        //     }
-
-        //     promptMessage.classList.add('show');
-        //     showSegmentMessage(promptMessage, mainOption, subOption);
-        // }
-        // // Add new function to handle platform business type changes
-        // function handlePlatformBusinessTypeChange(select) {
-        //     const merchantSubSegment = document.querySelector('input[name="merchantSubSegment"]');
-        //     if (merchantSubSegment) {
-        //         merchantSubSegment.value = select.value;
-        //     }
-
-        //     // Show congratulations message with main option and subcategory
-        //     const promptMessage = document.getElementById('segmentPrompt');
-        //     promptMessage.classList.add('show');
-        //     const mainOption = 'Master Account with Multiple Accounts Under It';
-        //     const subOption = `Platform - ${select.value}`;
-        //     showSegmentMessage(promptMessage, mainOption, subOption);
-        // }
-
-        // // Add new helper function to show segment message
-        // function showSegmentMessage(promptElement, mainOption, subOption) {
-        //     promptElement.innerHTML = `
-        //         <strong>Congratulations!</strong><br>
-        //         Main Selection: ${mainOption}<br>
-        //         Category: ${subOption}
-        //     `;
-        // }
-
-
         function handleBusinessTypeChange(event) {
             const businessType = event.target.value;
             const promptMessage = document.getElementById('segmentPrompt');
@@ -1938,7 +1770,7 @@
             const platformFields = document.querySelector('.conditional-field[data-parent="platform"]');
             platformFields.style.display = 'none';
 
-            switch(businessType) {
+            switch (businessType) {
                 case 'marketplace':
                     subOption = 'Marketplace';
                     promptMessage.classList.add('show');
@@ -2035,7 +1867,7 @@
                 let mainOption = '';
                 let subOption = '';
 
-                switch(selectedValue) {
+                switch (selectedValue) {
                     case 'single-account':
                         mainOption = 'Single Account';
                         subOption = 'Normal Merchant';
@@ -2062,8 +1894,8 @@
         function showSegmentMessage(promptElement, mainOption, subOption) {
             promptElement.innerHTML = `
                 <strong>Congratulations!</strong><br>
-                Account Typen: ${mainOption}<br>
-                Segment: ${subOption}
+                Main Selection: ${mainOption}<br>
+                Category: ${subOption}
             `;
         }
 
@@ -2186,6 +2018,775 @@
             return labels[technology] || technology;
         }
 
+        // function submitForm() {
+        //     try {
+        //         // Generate CSV data
+        //         const csvData = generateCSVData();
+        //         const csvBlob = new Blob([csvData], { type: 'text/csv;charset=utf-8' });
+        //         const csvFile = new File([csvBlob], 'merchant_onboarding.csv', {
+        //             type: 'text/csv;charset=utf-8'
+        //         });
+
+        //         // Generate PDF data
+        //         const pdfBlob = generatePDFData();
+        //         const pdfFile = new File([pdfBlob], 'merchant_onboarding.pdf', {
+        //             type: 'application/pdf'
+        //         });
+
+        //         // Create FormData object
+        //         const formDataToSubmit = new FormData();
+
+        //         // Collect CC emails
+        //         const ccEmails = Array.from(document.querySelectorAll('.cc-email'))
+        //             .map(input => input.value.trim())
+        //             .filter(email => email && isValidEmail(email));
+
+        //         // Structure the form data for Laravel
+        //         const mainFormData = {
+        //             serviceSelection: {
+        //                 serviceType: formData.step1_selection,
+        //                 companyDetails: {
+        //                     companyName: formData['company-name'],
+        //                     baseCountry: formData['base-country'],
+        //                     accountHolder: {
+        //                         name: formData['account-holder-name'],
+        //                         email: formData['account-holder-email'],
+        //                         phone: formData['account-holder-phone']
+        //                     }
+        //                 },
+        //                 operatingCountries: {
+        //                     hasMultipleCountries: formData['operate-other-countries'] === 'yes',
+        //                     countries: formData['operating-countries'] || []
+        //                 },
+        //                 pciCompliant: formData['pci-compliant']
+        //             },
+        //             companyCategory: {
+        //                 categoryType: formData.step2_selection,
+        //                 merchantSegment: formData['merchantSegment'],
+        //                 accountDetails: formData.step2_selection === 'multiple-accounts' ? {
+        //                     numberOfAccounts: formData['number-of-accounts'],
+        //                     dashboardPreference: formData['dashboard-preference']
+        //                 } : null,
+        //                 masterAccountDetails: formData.step2_selection === 'master-account' ? {
+        //                     businessType: formData['business-type'],
+        //                     platformDetails: formData['business-type'] === 'platform' ? {
+        //                         businessType: formData['platform-business-type']
+        //                     } : null
+        //                 } : null
+        //             },
+        //             acceptance: {
+        //                 settlementCurrency: formData['settlement-currency'],
+        //                 payinCurrencies: formData['payin-currencies'],
+        //                 paymentMethods: formData['payment-methods']
+        //             },
+        //             integration: {
+        //                 channels: formData['integration-channels'],
+        //                 webIntegration: formData['integration-channels']?.includes('web') ? {
+        //                     mainDomain: formData['main-domain'],
+        //                     testDomain: formData['test-domain'],
+        //                     frontendTech: formData['frontend-tech'],
+        //                     backendTech: formData['backend-tech']
+        //                 } : null,
+        //                 appIntegration: formData['integration-channels']?.includes('app') ? {
+        //                     technologies: formData['app-technologies'],
+        //                     bundleIds: appTechBundleIds
+        //                 } : null,
+        //                 integrationFlow: formData['integration-flow'],
+        //                 features: formData['features'],
+        //                 dates: {
+        //                     goLiveDate: formData['go-live-date'],
+        //                     reviewMeetingDate: formData['review-meeting-date']
+        //                 }
+        //             },
+        //             reporting: {
+        //                 channels: formData['report-channels']
+        //             },
+        //             ccEmails: ccEmails,
+        //         };
+        //         const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+
+        //         // Add form data and CSRF token
+        //         formDataToSubmit.append('formData', JSON.stringify(mainFormData));
+        //         formDataToSubmit.append('_token', csrfToken);
+
+        //         // Add files
+        //         formDataToSubmit.append('csvFile', csvFile);
+        //         formDataToSubmit.append('pdfFile', pdfFile);
+
+        //         // Create XMLHttpRequest for synchronous request
+        //         const xhr = new XMLHttpRequest();
+        //         xhr.open('POST', '/api/merchant-onboarding', false); // false makes it synchronous
+
+        //         // Set headers including CSRF token
+        //         xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+        //         xhr.setRequestHeader('Accept', 'application/json');
+
+        //         // Send request and handle response
+        //         xhr.onreadystatechange = function() {
+        //             if (xhr.readyState === 4) {
+        //                 if (xhr.status === 200) {
+        //                     try {
+        //                         const response = JSON.parse(xhr.responseText);
+        //                         if (response.message) {
+        //                             alert(response.message);
+        //                         } else {
+        //                             alert('Form submitted successfully!');
+        //                         }
+        //                         resetForm();
+        //                     } catch (e) {
+        //                         alert('Form submitted successfully!');
+        //                         resetForm();
+        //                     }
+        //                 } else if (xhr.status === 422) {
+        //                     // Handle Laravel validation errors
+        //                     try {
+        //                         const response = JSON.parse(xhr.responseText);
+        //                         let errorMessage = 'Validation errors:\n';
+        //                         Object.keys(response.errors).forEach(key => {
+        //                             errorMessage += `${key}: ${response.errors[key].join(', ')}\n`;
+        //                         });
+        //                         alert(errorMessage);
+        //                     } catch (e) {
+        //                         alert('Validation failed. Please check your input.');
+        //                     }
+        //                 } else {
+        //                     alert('Error submitting form. Please try again.');
+        //                 }
+        //             }
+        //         };
+
+        //         // Handle network errors
+        //         xhr.onerror = function() {
+        //             alert('Network error occurred. Please try again.');
+        //         };
+
+        //         // Send the request
+        //         xhr.send(formDataToSubmit);
+
+        //     } catch (error) {
+        //         console.error('Error preparing form data:', error);
+        //         alert('Error preparing form data. Please try again.');
+        //     }
+        // }
+
+        function submitForm() {
+            try {
+                // Show loading overlay
+                document.body.insertAdjacentHTML('beforeend', `
+                    <div id="loadingOverlay" style="
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(255,255,255,0.8);
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        z-index: 9999;
+                    ">
+                        <div style="text-align: center;">
+                            <div class="spinner-border text-primary" role="status"></div>
+                            <p class="mt-2">Processing your submission...</p>
+                        </div>
+                    </div>
+                `);
+
+                // Get CSRF token
+                const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+                // Create FormData object
+                const formDataToSubmit = new FormData();
+
+                // Collect CC emails
+                const ccEmails = Array.from(document.querySelectorAll('.cc-email'))
+                    .map(input => input.value.trim())
+                    .filter(email => email && isValidEmail(email));
+                    console.log("ccEmails", ccEmails);
+                // Structure the form data
+
+                formDataToSubmit.append('serviceType', formData.step1_selection);
+                formDataToSubmit.append('companyName', formData['company-name']);
+                formDataToSubmit.append('baseCountry', formData['base-country']);
+                formDataToSubmit.append('accountHolderName', formData['account-holder-name']);
+                formDataToSubmit.append('accountHolderEmail', formData['account-holder-email']);
+                formDataToSubmit.append('accountHolderPhone', formData['account-holder-phone']);
+                formDataToSubmit.append('hasMultipleCountries', formData['operate-other-countries'] === 'yes');
+
+                // Handle operating countries array
+                if (formData['operating-countries']) {
+                    formData['operating-countries'].forEach((country, index) => {
+                        formDataToSubmit.append(`operatingCountries[${index}]`, country);
+                    });
+                }
+
+                formDataToSubmit.append('pciCompliant', formData['pci-compliant']);
+
+                // Append company category data
+                formDataToSubmit.append('categoryType', formData.step2_selection);
+                formDataToSubmit.append('merchantSegment', formData['merchantSegment']);
+
+                if (formData.step2_selection === 'multiple-accounts') {
+                    formDataToSubmit.append('numberOfAccounts', formData['number-of-accounts']);
+                    formDataToSubmit.append('dashboardPreference', formData['dashboard-preference']);
+                }
+
+                if (formData.step2_selection === 'master-account') {
+                    formDataToSubmit.append('businessType', formData['business-type']);
+                    if (formData['business-type'] === 'platform') {
+                        formDataToSubmit.append('platformBusinessType', formData['platform-business-type']);
+                    }
+                }
+
+                // Append acceptance data
+                formDataToSubmit.append('settlementCurrency', formData['settlement-currency']);
+
+                // Handle payin currencies array
+                if (formData['payin-currencies']) {
+                    formData['payin-currencies'].forEach((currency, index) => {
+                        formDataToSubmit.append(`payinCurrencies[${index}]`, currency);
+                    });
+                }
+
+                // Handle payment methods array
+                if (formData['payment-methods']) {
+                    formData['payment-methods'].forEach((method, index) => {
+                        formDataToSubmit.append(`paymentMethods[${index}]`, method);
+                    });
+                }
+
+                // Append integration data
+                if (formData['integration-channels']) {
+                    formData['integration-channels'].forEach((channel, index) => {
+                        formDataToSubmit.append(`integrationChannels[${index}]`, channel);
+                    });
+
+                    if (formData['integration-channels'].includes('web')) {
+                        formDataToSubmit.append('mainDomain', formData['main-domain']);
+                        formDataToSubmit.append('testDomain', formData['test-domain']);
+                        formDataToSubmit.append('frontendTech', formData['frontend-tech']);
+                        formDataToSubmit.append('backendTech', formData['backend-tech']);
+                    }
+
+                    if (formData['integration-channels'].includes('app')) {
+                        formDataToSubmit.append('appTechnologies', formData['app-technologies']);
+                        // Handle bundle IDs
+                        if (appTechBundleIds) {
+                            Object.entries(appTechBundleIds).forEach(([platform, bundleId]) => {
+                                formDataToSubmit.append(`bundleIds[${platform}]`, bundleId);
+                            });
+                        }
+                    }
+                }
+
+                formDataToSubmit.append('integrationFlow', formData['integration-flow']);
+
+                // Handle features array
+                if (formData['features']) {
+                    formData['features'].forEach((feature, index) => {
+                        formDataToSubmit.append(`features[${index}]`, feature);
+                    });
+                }
+
+                formDataToSubmit.append('goLiveDate', formData['go-live-date']);
+                formDataToSubmit.append('reviewMeetingDate', formData['review-meeting-date']);
+
+                // Append reporting data
+                if (formData['report-channels']) {
+                    formData['report-channels'].forEach((channel, index) => {
+                        formDataToSubmit.append(`reportChannels[${index}]`, channel);
+                    });
+                }
+
+                // Append CC emails
+                ccEmails.forEach((email, index) => {
+                    formDataToSubmit.append(`ccEmails[${index}]`, email);
+                });
+
+                // const mainFormData = {
+                //     serviceSelection: {
+                //         serviceType: formData.step1_selection,
+                //         companyDetails: {
+                //             companyName: formData['company-name'],
+                //             baseCountry: formData['base-country'],
+                //             accountHolder: {
+                //                 name: formData['account-holder-name'],
+                //                 email: formData['account-holder-email'],
+                //                 phone: formData['account-holder-phone']
+                //             }
+                //         },
+                //         operatingCountries: {
+                //             hasMultipleCountries: formData['operate-other-countries'] === 'yes',
+                //             countries: formData['operating-countries'] || []
+                //         },
+                //         pciCompliant: formData['pci-compliant']
+                //     },
+                //     companyCategory: {
+                //         categoryType: formData.step2_selection,
+                //         merchantSegment: formData['merchantSegment'],
+                //         accountDetails: formData.step2_selection === 'multiple-accounts' ? {
+                //             numberOfAccounts: formData['number-of-accounts'],
+                //             dashboardPreference: formData['dashboard-preference']
+                //         } : null,
+                //         masterAccountDetails: formData.step2_selection === 'master-account' ? {
+                //             businessType: formData['business-type'],
+                //             platformDetails: formData['business-type'] === 'platform' ? {
+                //                 businessType: formData['platform-business-type']
+                //             } : null
+                //         } : null
+                //     },
+                //     acceptance: {
+                //         settlementCurrency: formData['settlement-currency'],
+                //         payinCurrencies: formData['payin-currencies'],
+                //         paymentMethods: formData['payment-methods']
+                //     },
+                //     integration: {
+                //         channels: formData['integration-channels'],
+                //         webIntegration: formData['integration-channels']?.includes('web') ? {
+                //             mainDomain: formData['main-domain'],
+                //             testDomain: formData['test-domain'],
+                //             frontendTech: formData['frontend-tech'],
+                //             backendTech: formData['backend-tech']
+                //         } : null,
+                //         appIntegration: formData['integration-channels']?.includes('app') ? {
+                //             technologies: formData['app-technologies'],
+                //             bundleIds: appTechBundleIds
+                //         } : null,
+                //         integrationFlow: formData['integration-flow'],
+                //         features: formData['features'],
+                //         dates: {
+                //             goLiveDate: formData['go-live-date'],
+                //             reviewMeetingDate: formData['review-meeting-date']
+                //         }
+                //     },
+                //     reporting: {
+                //         channels: formData['report-channels']
+                //     },
+                //     ccEmails: ccEmails,
+                // };
+
+
+
+                // Generate files
+                const csvBlob = new Blob([generateCSVData()], {
+                    type: 'text/csv;charset=utf-8'
+                });
+                const csvFile = new File([csvBlob], 'merchant_onboarding.csv', {
+                    type: 'text/csv;charset=utf-8'
+                });
+
+                const pdfBlob = generatePDFData();
+                const pdfFile = new File([pdfBlob], 'merchant_onboarding.pdf', {
+                    type: 'application/pdf'
+                });
+
+                // Add data to FormData
+                formDataToSubmit.append('csvFile', csvFile);
+                formDataToSubmit.append('pdfFile', pdfFile);
+                formDataToSubmit.append('_token', csrfToken);
+
+                // Create XMLHttpRequest for synchronous submission
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '/scoping/submit', false); // false makes it synchronous
+                xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+                xhr.setRequestHeader('Accept', 'application/json');
+
+                // Handle the response
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        // Remove loading overlay
+                        document.getElementById('loadingOverlay')?.remove();
+                        console.log(formDataToSubmit.get('formData'))
+                        if (xhr.status === 200) {
+                            try {
+                                const response = JSON.parse(xhr?.responseText);
+                                const formDetails = JSON.parse(response?.formData);
+                                // Store any necessary data in session storage
+                                sessionStorage.setItem('submissionReference', response.referenceNumber);
+                                sessionStorage.setItem('responseItems', response);
+
+                                // Redirect to success page
+                                console.log(formDetails);
+                                alert(response.message || 'Form submitted successfully!');
+                                // Redirect to a generic success page if JSON parsing fails
+                                // window.location.href = '/test-card';
+
+
+
+                                resetForm();
+
+                            } catch (e) {
+
+                            }
+                        } else if (xhr.status === 422) {
+                            // Handle Laravel validation errors
+                            try {
+                                const response = JSON.parse(xhr.responseText);
+                                if (response.redirect) {
+                                    // Store validation errors in session storage
+                                    sessionStorage.setItem('validationErrors', JSON.stringify(response.errors));
+
+                                    // Redirect to error page
+                                    // window.location.href = response.redirect;
+                                } else {
+                                    let errorMessage = 'Validation errors:\n';
+                                    Object.keys(response.errors).forEach(key => {
+                                        errorMessage += `${key}: ${response.errors[key].join(', ')}\n`;
+                                    });
+                                    alert(errorMessage);
+                                }
+                            } catch (e) {
+                                alert('Validation failed. Please check your input.');
+                            }
+                        } else {
+                            try {
+                                const response = JSON.parse(xhr.responseText);
+                                if (response.redirect) {
+                                    // Store error message in session storage
+                                    sessionStorage.setItem('submissionError', response.error ||
+                                        'Unknown error occurred');
+                                    // Redirect to error page
+                                    // window.location.href = response.redirect;
+                                } else {
+                                    alert('Error submitting form. Please try again.');
+                                }
+                            } catch (e) {
+                                // Redirect to generic error page if JSON parsing fails
+                                // window.location.href = '/merchant/error';
+                            }
+                        }
+                    }
+                };
+
+                // Handle network errors
+                xhr.onerror = function() {
+                    // Remove loading overlay
+                    document.getElementById('loadingOverlay')?.remove();
+
+                    // Store error message in session storage
+                    sessionStorage.setItem('submissionError', 'Network error occurred');
+
+                    // Redirect to error page
+                    // window.location.href = '/merchant/error';
+                };
+
+                // Send the request
+                xhr.send(formDataToSubmit);
+
+            } catch (error) {
+                // Remove loading overlay
+                document.getElementById('loadingOverlay')?.remove();
+
+                console.error('Error preparing form data:', error);
+
+                // Store error message in session storage
+                sessionStorage.setItem('submissionError', error.message || 'Error preparing form data');
+
+                // Redirect to error page
+                // window.location.href = '/merchant/error';
+            }
+        }
+
+        // Add functions to handle page load events for success and error pages
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if we're on the success page
+            if (window.location.pathname.includes('/merchant/success')) {
+                const reference = sessionStorage.getItem('submissionReference');
+                if (reference) {
+                    // You can use this reference to show additional details
+                    document.getElementById('referenceNumber').textContent = reference;
+                    // Clear the session storage
+                    sessionStorage.removeItem('submissionReference');
+                }
+            }
+
+            // Check if we're on the error page
+            if (window.location.pathname.includes('/merchant/error')) {
+                const error = sessionStorage.getItem('submissionError');
+                const validationErrors = sessionStorage.getItem('validationErrors');
+
+                if (error) {
+                    document.getElementById('errorMessage').textContent = error;
+                    sessionStorage.removeItem('submissionError');
+                }
+
+                if (validationErrors) {
+                    try {
+                        const errors = JSON.parse(validationErrors);
+                        const errorList = document.getElementById('validationErrorList');
+                        if (errorList) {
+                            Object.entries(errors).forEach(([field, messages]) => {
+                                const li = document.createElement('li');
+                                li.innerHTML = `<strong>${field}:</strong> ${messages.join(', ')}`;
+                                errorList.appendChild(li);
+                            });
+                        }
+                        sessionStorage.removeItem('validationErrors');
+                    } catch (e) {
+                        console.error('Error parsing validation errors:', e);
+                    }
+                }
+            }
+        });
+
+        // Add a utility function to handle form reset with confirmation
+        function resetForm() {
+            if (confirm('Are you sure you want to reset the form? All entered data will be lost.')) {
+                // Reset form elements
+                document.getElementById('multiStepForm').reset();
+
+                // Reset form data
+                Object.keys(formData).forEach(key => delete formData[key]);
+                appTechBundleIds = {};
+
+                // Reset UI state
+                currentStep = 0;
+
+                // Reset step indicators
+                document.querySelectorAll('.form-step').forEach((step, index) => {
+                    step.classList.toggle('active', index === 0);
+                });
+                document.querySelectorAll('.step-dot').forEach((dot, index) => {
+                    dot.classList.toggle('active', index === 0);
+                });
+
+                // Reset cards and fields
+                document.querySelectorAll('.option-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+                document.querySelectorAll('.conditional-field').forEach(field => {
+                    field.classList.remove('show');
+                });
+
+                // Reset headers and summaries
+                document.querySelector('.account-header')?.classList.remove('show');
+                document.querySelector('.congratulations')?.classList.remove('show');
+                document.querySelector('.summary-table')?.classList.remove('show');
+                document.querySelector('.export-buttons')?.classList.remove('show');
+
+                // Reset navigation
+                const navigation = document.querySelector('.navigation');
+                if (navigation) {
+                    navigation.style.display = 'block';
+                }
+                const prevBtn = document.getElementById('prevBtn');
+                if (prevBtn) {
+                    prevBtn.style.visibility = 'hidden';
+                }
+                const nextBtn = document.getElementById('nextBtn');
+                if (nextBtn) {
+                    nextBtn.textContent = 'Next step';
+                }
+
+                // Scroll to top
+                window.scrollTo(0, 0);
+
+                return true;
+            }
+            return false;
+        }
+
+        // Add route handling utility
+        const routes = {
+            success: '/merchant/success',
+            error: '/merchant/error',
+            dashboard: '/merchant/dashboard',
+            support: '/merchant/support'
+        };
+
+        function redirect(route, params = {}) {
+            let url = routes[route] || route;
+
+            // Add query parameters if any
+            if (Object.keys(params).length > 0) {
+                const queryString = new URLSearchParams(params).toString();
+                url = `${url}?${queryString}`;
+            }
+
+            // window.location.href = url;
+        }
+
+        // Add loading overlay utility
+        function showLoadingOverlay(message = 'Processing...') {
+            const overlay = document.createElement('div');
+            overlay.id = 'loadingOverlay';
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(255,255,255,0.8);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+            `;
+
+            overlay.innerHTML = `
+                <div style="text-align: center;">
+                    <div class="spinner-border text-primary" role="status"></div>
+                    <p class="mt-2">${message}</p>
+                </div>
+            `;
+
+            document.body.appendChild(overlay);
+            return overlay;
+        }
+
+        function hideLoadingOverlay() {
+            document.getElementById('loadingOverlay')?.remove();
+        }
+
+        // Add form validation utility
+        function validateForm() {
+            const requiredFields = document.querySelectorAll('[required]');
+            const errors = [];
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    errors.push({
+                        field: field.name,
+                        message: `${field.name.replace('-', ' ')} is required`
+                    });
+                    field.classList.add('is-invalid');
+                } else {
+                    field.classList.remove('is-invalid');
+                }
+            });
+
+            return {
+                isValid: errors.length === 0,
+                errors
+            };
+        }
+
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+        // Helper function to generate CSV data synchronously
+        function generateCSVData() {
+            const rows = [
+                ['Field', 'Value']
+            ];
+
+            for (const [key, value] of Object.entries(formData)) {
+                if (key === 'pci-compliant') {
+                    rows.push(['PCI Compliance Status', value === 'yes' ? 'Yes' : 'No']);
+                } else if (key === 'app-technologies' && appTechBundleIds && Object.keys(appTechBundleIds).length > 0) {
+                    Object.entries(appTechBundleIds).forEach(([tech, ids]) => {
+                        if (ids.length > 0 && ids[0]) {
+                            rows.push([`${getTechnologyLabel(tech)} Bundle IDs`, ids.join('; ')]);
+                        }
+                    });
+                } else if (key !== 'bundle-ids') {
+                    rows.push([
+                        formatFieldName(key),
+                        Array.isArray(value) ? value.join('; ') : value
+                    ]);
+                }
+            }
+
+            return rows
+                .map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(','))
+                .join('\n');
+        }
+
+        // Helper function to generate PDF data synchronously
+        function generatePDFData() {
+            const {
+                jsPDF
+            } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Add title
+            doc.setFontSize(16);
+            doc.text('Merchant Onboarding Summary', 20, 20);
+
+            // Add content
+            doc.setFontSize(12);
+            let yPosition = 40;
+
+            for (const [key, value] of Object.entries(formData)) {
+                if (key === 'app-technologies' && appTechBundleIds && Object.keys(appTechBundleIds).length > 0) {
+                    doc.text('App Technologies and Bundle IDs:', 20, yPosition);
+                    yPosition += 10;
+
+                    Object.entries(appTechBundleIds).forEach(([tech, ids]) => {
+                        if (ids.length > 0 && ids[0]) {
+                            const techLabel = getTechnologyLabel(tech);
+                            doc.text(`${techLabel}:`, 25, yPosition);
+                            yPosition += 7;
+
+                            ids.forEach(id => {
+                                if (id) {
+                                    doc.text(`- ${id}`, 30, yPosition);
+                                    yPosition += 7;
+                                }
+                            });
+                        }
+                    });
+                } else if (key !== 'bundle-ids') {
+                    const text = `${formatFieldName(key)}: ${Array.isArray(value) ? value.join(', ') : value}`;
+                    const textLines = doc.splitTextToSize(text, 170);
+
+                    if (yPosition + (textLines.length * 7) > 280) {
+                        doc.addPage();
+                        yPosition = 20;
+                    }
+
+                    doc.text(textLines, 20, yPosition);
+                    yPosition += (textLines.length * 7) + 3;
+                }
+            }
+
+            return doc.output('blob');
+        }
+
+        // Reset form function remains the same
+        function resetForm() {
+            // Reset form elements
+            document.getElementById('multiStepForm').reset();
+
+            // Reset form data
+            Object.keys(formData).forEach(key => delete formData[key]);
+            appTechBundleIds = {};
+
+            // Reset UI state
+            currentStep = 0;
+
+            // Reset step indicators
+            document.querySelectorAll('.form-step').forEach((step, index) => {
+                step.classList.toggle('active', index === 0);
+            });
+            document.querySelectorAll('.step-dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === 0);
+            });
+
+            // Reset cards and fields
+            document.querySelectorAll('.option-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            document.querySelectorAll('.conditional-field').forEach(field => {
+                field.classList.remove('show');
+            });
+
+            // Reset headers and summaries
+            document.querySelector('.account-header').classList.remove('show');
+            document.querySelector('.congratulations').classList.remove('show');
+            document.querySelector('.summary-table').classList.remove('show');
+            document.querySelector('.export-buttons').classList.remove('show');
+
+            // Reset navigation
+            document.querySelector('.navigation').style.display = 'block';
+            document.getElementById('prevBtn').style.visibility = 'hidden';
+            document.getElementById('nextBtn').textContent = 'Next step';
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
     </script>
 </body>
+
 </html>
