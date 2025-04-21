@@ -52,6 +52,14 @@ Route::controller(App\Http\Controllers\GeneralOperationsController::class)->midd
 
     });
 
+    Route::prefix('lead')->group(function (){
+
+        Route::get('/create', 'createLead')->name('lead.create');
+
+
+
+});
+
 
 
     Route::prefix('business')->group(function (){

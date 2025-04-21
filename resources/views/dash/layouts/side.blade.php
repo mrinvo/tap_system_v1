@@ -85,6 +85,29 @@
             </ul>
           </li>
 
+                    {{-- Lead Start --}}
+                    <li class="nav-item">
+                        <a href="#" class="nav-link ">
+                          <i class="nav-icon fas fa-copy"></i>
+                          <p>
+                            Leads
+                            <i class="fas fa-angle-left right"></i>
+                            <span class="badge badge-info right"></span>
+                          </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                          <li class="nav-item">
+                            <a href="{{ route('lead.create') }}" class="nav-link active">
+                              <i class="far fa-circle nav-icon"></i>
+                              <p>Create Lead</p>
+                            </a>
+                          </li>
+
+
+                        </ul>
+                      </li>
+                      {{-- Lead End --}}
+
           <li class="nav-item">
             <a href="#" class="nav-link ">
               <i class="nav-icon fas fa-copy"></i>

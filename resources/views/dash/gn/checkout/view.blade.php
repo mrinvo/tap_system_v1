@@ -8,7 +8,7 @@
         <div class="col-md-12">
             <div class="card card-default">
                 <div class="card-header">
-                    <h3 class="card-title">Create Business Form</h3>
+                    <h3 class="card-title">Checkout Form</h3>
                 </div>
 
                 @if (session('success'))

@@ -15,7 +15,7 @@
 <body>
     <div id="apple-pay-button"></div>
     <hr>
-    <div id="benefit-pay-button"></div>
+    {{-- <div id="benefit-pay-button"></div> --}}
     <script type="text/javascript">
         // var applePayRender = undefined
         const {
@@ -27,15 +27,14 @@
         render({
                 "debug": false,
                 "scope": "TapToken",
-                "publicKey": "pk_test_3WQjNCvV6S2pU8JeuBEtfR49",
+                "publicKey": "pk_live_suck0V4P5mZEHUdqtDILvCQj",
                 "environment": "development",
                 "merchant": {
-                    "domain": "https://test2.niceonesa.com",
-                    "id": "39455243"
+                    "domain": "yallatoys.com",
+                    "id": "63566785"
                 },
                 "acceptance": {
                     "supportedBrands": [
-                        "mada",
                         "masterCard",
                         "visa"
                     ]

@@ -76,4 +76,10 @@ class GeneralOperationsController extends Controller
         return view('dash.gn.checkout.view');
     }
 
+    //leads
+
+    public function createLead(){
+        return view('dash.gn.lead.create');
+    }
+
 }
